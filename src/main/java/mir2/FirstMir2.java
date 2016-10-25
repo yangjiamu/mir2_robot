@@ -1,3 +1,5 @@
+package mir2;
+
 import com.xnx3.microsoft.Com;
 import com.xnx3.microsoft.Window;
 import com.xnx3.robot.Robot;
