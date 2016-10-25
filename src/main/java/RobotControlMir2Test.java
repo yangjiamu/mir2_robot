@@ -9,16 +9,16 @@ public class RobotControlMir2Test {
     private static final Robot robot = new Robot();
 
     public static void main(String[] args) throws InterruptedException {
-        Thread.sleep(1000 * 1);
+        Thread.sleep(1000 * 20);
         say("hello");
     }
 
     public static void say(String str) {
-        robot.press((int) KeyEvent.KEY_EVENT_MASK);
+        robot.press((int) KeyEvent.VK_ENTER);
         for (int i = 0; i < str.length(); i++) {
             System.out.println(i);
             robot.press(robot.StringToKey(str.substring(i, i + 1)));
         }
-        robot.press((int) KeyEvent.KEY_EVENT_MASK);
+        robot.press((int) KeyEvent.VK_ENTER);
     }
 }
