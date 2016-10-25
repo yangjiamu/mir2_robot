@@ -7,15 +7,17 @@ import java.awt.event.KeyEvent;
  */
 public class RobotControlMir2Test {
     private static final Robot robot = new Robot();
+
     public static void main(String[] args) throws InterruptedException {
-        Thread.sleep(1000*10);
-        say("Hello Mir2, I am OuYang");
+        Thread.sleep(1000 * 1);
+        say("hello");
     }
 
-    public static void say(String str){
+    public static void say(String str) {
         robot.press((int) KeyEvent.KEY_EVENT_MASK);
         for (int i = 0; i < str.length(); i++) {
-            robot.press(robot.StringToKey(str.substring(i, i+1)));
+            System.out.println(i);
+            robot.press(robot.StringToKey(str.substring(i, i + 1)));
         }
         robot.press((int) KeyEvent.KEY_EVENT_MASK);
     }
