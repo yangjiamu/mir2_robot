@@ -87,7 +87,7 @@ public class Com {
 	 */
 	public Com() {
 		versionCheck();
-		initCheckJreVersion();
+		//initCheckJreVersion();
 		initCopyDll();
 		
 		ComThread.InitSTA();
