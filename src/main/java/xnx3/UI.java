@@ -1,6 +1,6 @@
 package xnx3;
 
-import com.xnx3.file.FileUtil;
+import xnx3.file.FileUtil;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.BusinessBlackSteelSkin;
 import org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel;

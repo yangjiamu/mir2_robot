@@ -1,6 +1,6 @@
 package xnx3.media;
 
-import com.xnx3.file.FileUtil;
+import xnx3.file.FileUtil;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 

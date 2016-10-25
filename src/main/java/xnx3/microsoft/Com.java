@@ -3,13 +3,12 @@ package xnx3.microsoft;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComThread;
 import com.jacob.com.Variant;
-import com.xnx3.Lang;
-import com.xnx3.Log;
-import com.xnx3.UI;
-import com.xnx3.bean.ActiveBean;
-import com.xnx3.file.FileUtil;
-import com.xnx3.net.HttpUtil;
-import com.xnx3.robot.Robot;
+import xnx3.Lang;
+import xnx3.Log;
+import xnx3.UI;
+import xnx3.bean.ActiveBean;
+import xnx3.file.FileUtil;
+import xnx3.net.HttpUtil;
 
 import java.io.File;
 
@@ -114,7 +113,7 @@ public class Com {
 				if(content==null||content.length()==0){
 					System.out.println("连接服务器进行版本检测失败");
 				}else{
-					float version=Lang.stringToFloat(content, 1.0f);
+					float version= Lang.stringToFloat(content, 1.0f);
 					if(version-Lang.version>0.0005){
 						System.out.println("发现新版本："+version+"，请及时更新最新版本");
 					}

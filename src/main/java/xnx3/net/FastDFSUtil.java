@@ -1,8 +1,8 @@
 package xnx3.net;
 
-import com.xnx3.ConfigManagerUtil;
-import com.xnx3.Lang;
-import com.xnx3.bean.UploadBean;
+import xnx3.ConfigManagerUtil;
+import xnx3.Lang;
+import xnx3.bean.UploadBean;
 import org.csource_.common.MyException;
 import org.csource_.common.NameValuePair;
 import org.csource_.fastdfs.*;
@@ -181,7 +181,7 @@ public class FastDFSUtil{
 	public UploadBean upload(String local_filename) {
 		String[] results=null;
 		try {
-			String suffix = com.xnx3.Lang.findFileSuffix(local_filename);
+			String suffix = xnx3.Lang.findFileSuffix(local_filename);
 			if(suffix==null){
 				suffix=ClientGlobal.defaultSuffix;
 			}

@@ -21,7 +21,7 @@ public class FirstMir2 {
 
         Window window=new Window(com.getActiveXComponent());
         //查找当前运行的程序中标题包含“米尔”三个字的窗口句柄，
-        int hwnd=window.findWindow(0, null, "米尔");
+        int hwnd=window.findWindow(0, null, "Mir");
         //如果找到了寻仙这个游戏窗口了，确定是有这个程序存在，那么可以继续以下操作
         if(hwnd>0) {
 			/*
@@ -29,10 +29,12 @@ public class FirstMir2 {
 			 * 寻仙的就是这种模式绑定，只需要传入窗口句柄就可
 			 * 其他游戏的请自行组合测试绑定模式,使用： com.bind(hwnd, display, mouse, key, mode) 自行测试
 			 */
+            System.out.println("11111");
             if (com.bind(hwnd)) {
                 /**
                  * 绑定完毕，对游戏的操作全在这里
                  */
+                System.out.println("2222222");
                 say("Hello, I am ou yang");
             }
         }

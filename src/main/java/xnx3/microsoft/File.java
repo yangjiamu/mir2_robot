@@ -2,16 +2,15 @@ package xnx3.microsoft;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Variant;
-import com.xnx3.Log;
-import com.xnx3.bean.ActiveBean;
-import com.xnx3.file.FileUtil;
-import com.xnx3.media.MP3Play;
+import xnx3.Log;
+import xnx3.bean.ActiveBean;
+import xnx3.file.FileUtil;
 
 /**
  * 文件操作，包含文件基本操作、截图等
  * @author 管雷鸣
  */
-public class File extends FileUtil{
+public class File extends FileUtil {
 	private Log log;
 	private Sleep sleep;
 	private ActiveXComponent active=null;

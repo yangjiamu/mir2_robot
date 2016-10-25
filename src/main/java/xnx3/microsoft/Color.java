@@ -2,9 +2,9 @@ package xnx3.microsoft;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Variant;
-import com.xnx3.Lang;
-import com.xnx3.Log;
-import com.xnx3.bean.ActiveBean;
+import xnx3.Lang;
+import xnx3.Log;
+import xnx3.bean.ActiveBean;
 
 /**
  * 颜色识别
@@ -109,7 +109,7 @@ public class Color {
 			
 			String findColor=activeDm.invoke("FindColorE",var).getString();
 			String[] findColorArray=findColor.split("\\|");
-			xnx3_result[0]=Lang.Integer_(findColorArray[0], -1);
+			xnx3_result[0]= Lang.Integer_(findColorArray[0], -1);
 			xnx3_result[1]=Lang.Integer_(findColorArray[1], -1);
 			var=null;
 			findColorArray=null;

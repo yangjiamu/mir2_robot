@@ -2,8 +2,8 @@ package xnx3.net;
 
 import com.jcraft.jsch.*;
 import com.jcraft.jsch.ChannelSftp.LsEntry;
-import com.xnx3.Log;
-import com.xnx3.bean.FileBean;
+import xnx3.Log;
+import xnx3.bean.FileBean;
 
 import java.util.ArrayList;
 import java.util.List;

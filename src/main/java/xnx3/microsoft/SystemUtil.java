@@ -2,10 +2,10 @@ package xnx3.microsoft;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Variant;
-import com.xnx3.Lang;
-import com.xnx3.Log;
-import com.xnx3.UI;
-import com.xnx3.bean.ActiveBean;
+import xnx3.Lang;
+import xnx3.Log;
+import xnx3.UI;
+import xnx3.bean.ActiveBean;
 
 import javax.swing.*;
 import java.awt.*;

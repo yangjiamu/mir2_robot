@@ -1,8 +1,8 @@
 package xnx3.microsoft;
 
 import com.jacob.activeX.ActiveXComponent;
-import com.xnx3.Log;
-import com.xnx3.bean.ActiveBean;
+import xnx3.Log;
+import xnx3.bean.ActiveBean;
 
 /**
  * 模拟鼠标操作

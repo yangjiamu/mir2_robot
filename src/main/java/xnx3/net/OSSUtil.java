@@ -13,10 +13,10 @@ import com.aliyuncs.profile.IClientProfile;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleRequest;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse.Credentials;
-import com.xnx3.ConfigManagerUtil;
-import com.xnx3.Lang;
-import com.xnx3.media.ImageUtil;
-import com.xnx3.net.ossbean.PutResult;
+import xnx3.ConfigManagerUtil;
+import xnx3.Lang;
+import xnx3.media.ImageUtil;
+import xnx3.net.ossbean.PutResult;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -114,7 +114,7 @@ public class OSSUtil {
 	 * @return {@link PutResult} 若失败，返回null
 	 */
 	public static PutResult put(String filePath, String fileName, InputStream inputStream){
-		String fileSuffix=com.xnx3.Lang.subString(fileName, ".", null, 3);	//获得文件后缀，以便重命名
+		String fileSuffix=Lang.subString(fileName, ".", null, 3);	//获得文件后缀，以便重命名
         String name=Lang.uuid()+"."+fileSuffix;
         String path = filePath+name;
 		getOSSClient().putObject(bucketName, path, inputStream);
@@ -291,7 +291,6 @@ public class OSSUtil {
 	 * 以字符串创建文件，创建的文件编码为UTF-8
 	 * @param path 上传后的文件所在OSS的目录＋文件名，如 "jar/file/xnx3.html"
 	 * @param text 文件内容
-	 * @param encode 文件编码，如：UTF-8 
 	 * @return {@link PutResult} 若失败，返回null
 	 */
 	public static PutResult putStringFile(String path, String text){

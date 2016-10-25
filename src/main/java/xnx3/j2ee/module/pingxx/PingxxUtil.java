@@ -5,9 +5,9 @@ import com.pingplusplus.exception.PingppException;
 import com.pingplusplus.model.Charge;
 import com.pingplusplus.model.Event;
 import com.pingplusplus.model.Webhooks;
-import com.xnx3.ConfigManagerUtil;
-import com.xnx3.DateUtil;
-import com.xnx3.j2ee.module.pingxx.bean.SmallCharge;
+import xnx3.ConfigManagerUtil;
+import xnx3.DateUtil;
+import xnx3.j2ee.module.pingxx.bean.SmallCharge;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
 
@@ -88,16 +88,16 @@ public class PingxxUtil {
     }
     
     /**
-     * 将 webhooks接收到的json数据传入，获得 {@link com.xnx3.j2ee.module.pingxx.bean.Event}
+     * 将 webhooks接收到的json数据传入，获得 {@link xnx3.j2ee.module.pingxx.bean.Event}
      * @param dataString  webhooks接收到的json数据
      * @param sign header的签名
-     * @return 成功，返回 {@link com.xnx3.j2ee.module.pingxx.bean.Event},失败返回null
+     * @return 成功，返回 {@link xnx3.j2ee.module.pingxx.bean.Event},失败返回null
      */
-    private static com.xnx3.j2ee.module.pingxx.bean.Event getEventByContent(String dataString, String sign){
+    private static xnx3.j2ee.module.pingxx.bean.Event getEventByContent(String dataString, String sign){
     	try {
 			if(verifyData(dataString, sign, getPubKey())){
 				Event ev = Webhooks.eventParse(dataString);
-				com.xnx3.j2ee.module.pingxx.bean.Event event = new com.xnx3.j2ee.module.pingxx.bean.Event();
+				xnx3.j2ee.module.pingxx.bean.Event event = new xnx3.j2ee.module.pingxx.bean.Event();
 				event.setCreated(ev.getCreated());
 				event.setData(ev.getData());
 				event.setId(ev.getId());
@@ -206,10 +206,10 @@ public class PingxxUtil {
      * ping++异步回调传回的参数，直接调用此方法，拿到值
      * @param request {@link HttpServletRequest}
      * @param response {@link HttpServletResponse}
-     * @return 若成功，返回 {@link com.xnx3.j2ee.module.pingxx.bean.Event} 若失败，返回null
+     * @return 若成功，返回 {@link xnx3.j2ee.module.pingxx.bean.Event} 若失败，返回null
      * @throws IOException
      */
-    public static com.xnx3.j2ee.module.pingxx.bean.Event webhooks(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public static xnx3.j2ee.module.pingxx.bean.Event webhooks(HttpServletRequest request,HttpServletResponse response) throws IOException {
     	request.setCharacterEncoding("UTF8");
         // 获得 http body 内容
         BufferedReader reader = request.getReader();
@@ -222,7 +222,7 @@ public class PingxxUtil {
         
         String sign = request.getHeader("X-Pingplusplus-Signature");	//签名
         String dataString = buffer.toString();
-        com.xnx3.j2ee.module.pingxx.bean.Event event = getEventByContent(dataString, sign);
+        xnx3.j2ee.module.pingxx.bean.Event event = getEventByContent(dataString, sign);
     	return event;
     }
     

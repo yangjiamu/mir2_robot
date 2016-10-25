@@ -4,7 +4,7 @@ import ch.ethz.ssh2.ChannelCondition;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
-import com.xnx3.bean.ShellBean;
+import xnx3.bean.ShellBean;
 
 import java.io.IOException;
 import java.io.InputStream;

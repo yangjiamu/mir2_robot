@@ -2,8 +2,8 @@ package xnx3.microsoft;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Variant;
-import com.xnx3.Log;
-import com.xnx3.bean.ActiveBean;
+import xnx3.Log;
+import xnx3.bean.ActiveBean;
 
 /**
  * 图片识别

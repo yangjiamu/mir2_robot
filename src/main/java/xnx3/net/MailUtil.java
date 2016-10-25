@@ -1,6 +1,6 @@
 package xnx3.net;
 
-import com.xnx3.ConfigManagerUtil;
+import xnx3.ConfigManagerUtil;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

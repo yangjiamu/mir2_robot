@@ -1,7 +1,7 @@
 package xnx3.j2ee.util;
 
-import com.xnx3.DateUtil;
-import com.xnx3.Lang;
+import xnx3.DateUtil;
+import xnx3.Lang;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;

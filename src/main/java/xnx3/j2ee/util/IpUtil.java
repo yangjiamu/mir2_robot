@@ -1,6 +1,6 @@
 package xnx3.j2ee.util;
 
-import com.xnx3.Lang;
+import xnx3.Lang;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -1,6 +1,6 @@
 package xnx3;
 
-import com.xnx3.exception.NotReturnValueException;
+import xnx3.exception.NotReturnValueException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
