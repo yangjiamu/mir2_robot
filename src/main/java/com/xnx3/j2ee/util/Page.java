@@ -1,7 +1,7 @@
-package xnx3.j2ee.util;
+package com.xnx3.j2ee.util;
 
-import xnx3.Lang;
-import xnx3.bean.TagA;
+import com.xnx3.Lang;
+import com.xnx3.bean.TagA;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -187,6 +187,7 @@ public class Page{
 
 	/**
 	 * 传入当前页面的完整url（会自动过滤掉当前第几页的参数，以方便生成上一页、下一页等等链接）
+	 * @param url
 	 */
 	private void setUrl(HttpServletRequest request) {
 		if(request == null){
@@ -216,9 +217,9 @@ public class Page{
 		String ur = null;
 		if(url!=null&&url.indexOf(CURRENTPAGENAME)>0){
 			//传入的参数有当前页，需要吧currentPage这个参数给过滤掉
-			ur = Lang.subString(url, CURRENTPAGENAME, "&", 2);
+			ur = com.xnx3.Lang.subString(url, CURRENTPAGENAME, "&", 2);
 			if(ur==null||ur.length()==0){
-				ur=Lang.subString(url, CURRENTPAGENAME, null, 2);
+				ur=com.xnx3.Lang.subString(url, CURRENTPAGENAME, null, 2);
 			}
 			if(ur==null||ur.length()==0){
 				ur = url;

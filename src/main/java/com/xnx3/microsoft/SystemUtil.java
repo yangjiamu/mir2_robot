@@ -1,11 +1,11 @@
-package xnx3.microsoft;
+package com.xnx3.microsoft;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Variant;
-import xnx3.Lang;
-import xnx3.Log;
-import xnx3.UI;
-import xnx3.bean.ActiveBean;
+import com.xnx3.Lang;
+import com.xnx3.Log;
+import com.xnx3.UI;
+import com.xnx3.bean.ActiveBean;
 
 import javax.swing.*;
 import java.awt.*;
@@ -352,7 +352,7 @@ public class SystemUtil extends Lang {
 	/**
 	 * 开始-运行,运行cmd命令
 	 * <li>注意，此函数会阻塞当前线程，如，notepad打开一个记事本，会阻塞，直到打开的记事本关闭为止才会释放。
-	 * @param command 要运行的cmd命令，如  ping www.xnx3.com
+	 * @param command 要运行的cmd命令，如  ping www.com.xnx3.com
 	 * @return 执行的结果，若是出错则返回出错的原因
 	 */
     public static String cmd(String command){
@@ -381,7 +381,7 @@ public class SystemUtil extends Lang {
     
     /**
      * 注册dll文件进系统，注册成功时会有类似js的alert弹出框提示成功
-     * @param dllFilePath dll文件的绝对路径，如 C:\\xnx3.dll（如果有目录，会注册失败，建议将dll直接放到C盘根目录进行注册）
+     * @param dllFilePath dll文件的绝对路径，如 C:\\com.xnx3.dll（如果有目录，会注册失败，建议将dll直接放到C盘根目录进行注册）
      */
     public static void registerDll(String dllFilePath){
     	try {

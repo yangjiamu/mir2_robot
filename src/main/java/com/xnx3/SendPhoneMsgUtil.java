@@ -1,6 +1,6 @@
-package xnx3;
+package com.xnx3;
 
-import xnx3.net.SMSUtil;
+import com.xnx3.net.SMSUtil;
 
 import java.io.UnsupportedEncodingException;
 
@@ -61,7 +61,7 @@ public class SendPhoneMsgUtil {
 			e.printStackTrace();
 		}
 		
-		xnx3.net.HttpUtil httpUtil=new xnx3.net.HttpUtil();
+		com.xnx3.net.HttpUtil httpUtil=new com.xnx3.net.HttpUtil();
 		String url="http://"+requestIp+":9011/hy?uid="+uid+"&auth="+passwordMd5+"&mobile="+phone+"&msg="+content+"&encode=utf-8&expid=0";
 		String requestResult=httpUtil.get(url).getContent();
 		if(requestResult!=null&&requestResult.split(",")[0].equals("0")){

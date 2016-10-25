@@ -1,4 +1,4 @@
-package xnx3.robot.support;
+package com.xnx3.robot.support;
 
 /**
  * 坐标系

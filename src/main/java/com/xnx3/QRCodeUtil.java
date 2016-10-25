@@ -24,7 +24,7 @@ public class QRCodeUtil {
 	 */
 	public static BufferedImage createQRCoder(String content) {
 		int size = 90;
-		Qrcode testQrcode =new Qrcode();  
+		Qrcode testQrcode =new Qrcode();
         testQrcode.setQrcodeErrorCorrect('M');  
         testQrcode.setQrcodeEncodeMode('B');  
         testQrcode.setQrcodeVersion(7);  

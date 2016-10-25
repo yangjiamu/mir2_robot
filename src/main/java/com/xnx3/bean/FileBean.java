@@ -1,4 +1,4 @@
-package xnx3.bean;
+package com.xnx3.bean;
 
 import com.jcraft.jsch.SftpATTRS;
 

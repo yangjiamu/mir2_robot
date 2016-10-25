@@ -1,4 +1,4 @@
-package xnx3.net;
+package com.xnx3.net;
 
 import java.io.*;
 import java.net.HttpURLConnection;

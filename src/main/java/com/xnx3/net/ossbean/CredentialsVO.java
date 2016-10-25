@@ -1,6 +1,6 @@
-package xnx3.net.ossbean;
+package com.xnx3.net.ossbean;
 
-import xnx3.BaseVO;
+import com.xnx3.BaseVO;
 
 /**
  * 阿里云 临时账户 STS 返回值

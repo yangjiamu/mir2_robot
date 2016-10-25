@@ -1,16 +1,17 @@
-package xnx3.microsoft;
+package com.xnx3.microsoft;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Variant;
-import xnx3.Log;
-import xnx3.bean.ActiveBean;
-import xnx3.file.FileUtil;
+import com.xnx3.Log;
+import com.xnx3.bean.ActiveBean;
+import com.xnx3.file.FileUtil;
+import com.xnx3.media.MP3Play;
 
 /**
  * 文件操作，包含文件基本操作、截图等
  * @author 管雷鸣
  */
-public class File extends FileUtil {
+public class File extends FileUtil{
 	private Log log;
 	private Sleep sleep;
 	private ActiveXComponent active=null;
@@ -38,12 +39,12 @@ public class File extends FileUtil {
 					int play=active.invoke("Play",playFile).getInt();
 					sleep.sleep(playTime);
 					if(play==0){
-						log.debug("com.xnx3.automate.File","play","声音播放失败");
+						log.debug("com.com.xnx3.automate.File","play","声音播放失败");
 					}else{
 						active.invoke("Stop",play);
 					}
 				} catch (Exception e) {
-					log.debug("com.xnx3.automate.File","play","声音播放异常捕获"+e.getMessage());
+					log.debug("com.com.xnx3.automate.File","play","声音播放异常捕获"+e.getMessage());
 				}
 			}
 		}).start();
@@ -64,7 +65,7 @@ public class File extends FileUtil {
 		try {
 			xnx3_result=active.invoke("Play",playFile).getInt();
 			if(xnx3_result==0){
-				log.debug("com.xnx3.automate.File","play","声音播放失败");
+				log.debug("com.com.xnx3.automate.File","play","声音播放失败");
 			}else{
 				active.invoke("Stop",xnx3_result);
 			}
@@ -81,8 +82,8 @@ public class File extends FileUtil {
 	 * @param xEnd 区域的右下X坐标
 	 * @param yEnd 区域的右下Y坐标
 	 * @param fileName 保存的文件名
-	 * 		<li>只有文件名，如 "xnx3.png" 保存的地方为 {@link Com#setResourcePath(String)} 中设置的目录
-	 * 		<li>也可以指定全路径名，如"c:\\xunxian\\xnx3.png"
+	 * 		<li>只有文件名，如 "com.xnx3.png" 保存的地方为 {@link Com#setResourcePath(String)} 中设置的目录
+	 * 		<li>也可以指定全路径名，如"c:\\xunxian\\com.xnx3.png"
 	 */
 	public void screenImage(int xStart,int yStart,int xEnd,int yEnd, String fileName){
 		try {

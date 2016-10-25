@@ -1,8 +1,8 @@
-package xnx3.microsoft;
+package com.xnx3.microsoft;
 
 import com.jacob.activeX.ActiveXComponent;
-import xnx3.Log;
-import xnx3.bean.ActiveBean;
+import com.xnx3.Log;
+import com.xnx3.bean.ActiveBean;
 
 /**
  * 键盘模拟操作

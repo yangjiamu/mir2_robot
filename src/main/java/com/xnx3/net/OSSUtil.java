@@ -1,4 +1,4 @@
-package xnx3.net;
+package com.xnx3.net;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ListObjectsRequest;
@@ -13,10 +13,10 @@ import com.aliyuncs.profile.IClientProfile;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleRequest;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse.Credentials;
-import xnx3.ConfigManagerUtil;
-import xnx3.Lang;
-import xnx3.media.ImageUtil;
-import xnx3.net.ossbean.PutResult;
+import com.xnx3.ConfigManagerUtil;
+import com.xnx3.Lang;
+import com.xnx3.media.ImageUtil;
+import com.xnx3.net.ossbean.PutResult;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -95,7 +95,7 @@ public class OSSUtil {
 	
 	/**
 	 * 创建文件夹
-	 * @param folderName 要创建的文件夹名字，如要创建xnx3文件夹，则传入"xnx3/"。也可以传入"x/n/" 代表建立x文件夹同时其下再建立n文件夹
+	 * @param folderName 要创建的文件夹名字，如要创建xnx3文件夹，则传入"com.xnx3/"。也可以传入"x/n/" 代表建立x文件夹同时其下再建立n文件夹
 	 */
 	public static void createFolder(String folderName){
 		//既然是目录，那就是以/结束，判断此是否是以／结束的，若不是，末尾自动加上
@@ -109,12 +109,12 @@ public class OSSUtil {
 	/**
 	 * 上传文件
 	 * @param filePath 上传后的文件所在OSS的目录、路径，如 "jar/file/"
-	 * @param fileName 上传的文件名，如“xnx3.jar”；主要拿里面的后缀名。也可以直接传入文件的后缀名如“.jar”
+	 * @param fileName 上传的文件名，如“com.xnx3.jar”；主要拿里面的后缀名。也可以直接传入文件的后缀名如“.jar”
 	 * @param inputStream {@link InputStream}
 	 * @return {@link PutResult} 若失败，返回null
 	 */
 	public static PutResult put(String filePath, String fileName, InputStream inputStream){
-		String fileSuffix=Lang.subString(fileName, ".", null, 3);	//获得文件后缀，以便重命名
+		String fileSuffix=com.xnx3.Lang.subString(fileName, ".", null, 3);	//获得文件后缀，以便重命名
         String name=Lang.uuid()+"."+fileSuffix;
         String path = filePath+name;
 		getOSSClient().putObject(bucketName, path, inputStream);
@@ -124,7 +124,7 @@ public class OSSUtil {
 	
 	/**
 	 * 删除文件
-	 * @param filePath 文件所在OSS的绝对路径，如 "jar/file/xnx3.jpg"
+	 * @param filePath 文件所在OSS的绝对路径，如 "jar/file/com.xnx3.jpg"
 	 */
 	public static void deleteObject(String filePath){
 		getOSSClient().deleteObject(bucketName, filePath);
@@ -273,7 +273,7 @@ public class OSSUtil {
 	
 	/**
 	 * 以字符串创建文件
-	 * @param path 上传后的文件所在OSS的目录＋文件名，如 "jar/file/xnx3.html"
+	 * @param path 上传后的文件所在OSS的目录＋文件名，如 "jar/file/com.xnx3.html"
 	 * @param text 文件内容
 	 * @param encode 文件编码，如：UTF-8 
 	 * @return {@link PutResult} 若失败，返回null
@@ -289,8 +289,9 @@ public class OSSUtil {
 	
 	/**
 	 * 以字符串创建文件，创建的文件编码为UTF-8
-	 * @param path 上传后的文件所在OSS的目录＋文件名，如 "jar/file/xnx3.html"
+	 * @param path 上传后的文件所在OSS的目录＋文件名，如 "jar/file/com.xnx3.html"
 	 * @param text 文件内容
+	 * @param encode 文件编码，如：UTF-8 
 	 * @return {@link PutResult} 若失败，返回null
 	 */
 	public static PutResult putStringFile(String path, String text){

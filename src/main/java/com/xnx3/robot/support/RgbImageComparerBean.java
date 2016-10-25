@@ -1,4 +1,4 @@
-package xnx3.robot.support;
+package com.xnx3.robot.support;
 
 /**
  * RGB 相关，图片相似度计算时使用

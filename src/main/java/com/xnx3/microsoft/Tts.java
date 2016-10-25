@@ -1,9 +1,9 @@
-package xnx3.microsoft;
+package com.xnx3.microsoft;
 
-import xnx3.Log;
-import xnx3.bean.ActiveBean;
-import xnx3.file.FileUtil;
-import xnx3.media.TTSUtil;
+import com.xnx3.Log;
+import com.xnx3.bean.ActiveBean;
+import com.xnx3.file.FileUtil;
+import com.xnx3.media.TTSUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

@@ -1,4 +1,4 @@
-package xnx3.j2ee.module.pingxx.bean;
+package com.xnx3.j2ee.module.pingxx.bean;
 
 /**
  * webhooks接受的内容，转化为Event，但官方的Event没有解析到Charge对象。故而增加

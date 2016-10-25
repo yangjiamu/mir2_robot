@@ -1,6 +1,6 @@
-package xnx3.bean;
+package com.xnx3.bean;
 
-import xnx3.net.FastDFSUtil;
+import com.xnx3.net.FastDFSUtil;
 
 /**
  * FastDFS文件上传的返回对象

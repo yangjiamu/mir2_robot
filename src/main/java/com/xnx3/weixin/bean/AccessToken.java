@@ -1,4 +1,4 @@
-package xnx3.weixin.bean;
+package com.xnx3.weixin.bean;
 
 /**
  * 公众平台的API调用所需的普通access_token

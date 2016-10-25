@@ -1,13 +1,13 @@
-package xnx3.j2ee.module.pingxx;
+package com.xnx3.j2ee.module.pingxx;
 
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.exception.PingppException;
 import com.pingplusplus.model.Charge;
 import com.pingplusplus.model.Event;
 import com.pingplusplus.model.Webhooks;
-import xnx3.ConfigManagerUtil;
-import xnx3.DateUtil;
-import xnx3.j2ee.module.pingxx.bean.SmallCharge;
+import com.xnx3.ConfigManagerUtil;
+import com.xnx3.DateUtil;
+import com.xnx3.j2ee.module.pingxx.bean.SmallCharge;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
 
@@ -65,11 +65,11 @@ public class PingxxUtil {
 //    	String sign = "l4EUlkWgJD0cUNRshtGhrV/qQ6tXhnCANTDR5D3iHyo0F2WqhubbTUJEzp8Ym00TTIM37lv1mfVozpHF811Vy2ZXwnqPLrLl9SyWMnRML2OOYDpD0XrStHMyE774yf6HyaFD8fcmwlOOFeY26NyfCx3cmbLWHT+me/ZnKtA1N5eZmKkteUIMSgk8jhBHA4RT2nSapKiVbMqueBXrKmtekvuUHwRmuqHmi0ee/7uesIqWfhtGXRbwQvygIo+Mx2OV7qAvl0IyENipZUa+TTJ05GZDM/s6goPkH9pcp/hQ/lUTbIMU42jZJO30W6zCoDsZKUjTo6+Quz1XVW1lK/KuSw==";
 //		//模拟ping＋＋ 通过webhooks发送过来的json数据,实际web应用使用 webhooks(request, response)
 //		String dataString = "{\"id\":\"evt_ugB6x3K43D16wXCcqbplWAJo\",\"created\":1440407501,\"livemode\":false,\"type\":\"charge.succeeded\",\"data\":{\"object\":{\"id\":\"ch_Xsr7u35O3m1Gw4ed2ODmi4Lw\",\"object\":\"charge\",\"created\":1440407501,\"livemode\":true,\"paid\":true,\"refunded\":false,\"app\":\"app_urj1WLzvzfTK0OuL\",\"channel\":\"upacp\",\"order_no\":\"123456789\",\"client_ip\":\"127.0.0.1\",\"amount\":100,\"amount_settle\":0,\"currency\":\"cny\",\"subject\":\"Your Subject\",\"body\":\"Your Body\",\"extra\":{},\"time_paid\":1440407501,\"time_expire\":1440407501,\"time_settle\":null,\"transaction_no\":\"1224524301201505066067849274\",\"refunds\":{\"object\":\"list\",\"url\":\"/v1/charges/ch_Xsr7u35O3m1Gw4ed2ODmi4Lw/refunds\",\"has_more\":false,\"data\":[]},\"amount_refunded\":0,\"failure_code\":null,\"failure_msg\":null,\"metadata\":{},\"credential\":{},\"description\":null}},\"object\":\"event\",\"pending_webhooks\":0,\"request\":\"iar_qH4y1KbTy5eLGm1uHSTS00s\"}";
-//		com.xnx3.j2ee.module.pingxx.bean.Event event = getEventByContent(dataString, sign);
+//		com.com.xnx3.j2ee.module.pingxx.bean.Event event = getEventByContent(dataString, sign);
 //		if(event!=null){
-//			if(event.getType().equals(com.xnx3.j2ee.module.pingxx.bean.Event.TYPE_CHARGE_SUCCEEDED)){
+//			if(event.getType().equals(com.com.xnx3.j2ee.module.pingxx.bean.Event.TYPE_CHARGE_SUCCEEDED)){
 //				System.out.println("支付成功的回调，支付成功的订单号："+event.getSmallCharge().getOrderNo());
-//			}else if (event.getType().equals(com.xnx3.j2ee.module.pingxx.bean.Event.TYPE_REFUND_SUCCEEDED)) {
+//			}else if (event.getType().equals(com.com.xnx3.j2ee.module.pingxx.bean.Event.TYPE_REFUND_SUCCEEDED)) {
 //				System.out.println("退款成功的回调，退款成功的订单号："+event.getSmallCharge().getOrderNo());
 //			}
 //		}
@@ -88,16 +88,16 @@ public class PingxxUtil {
     }
     
     /**
-     * 将 webhooks接收到的json数据传入，获得 {@link xnx3.j2ee.module.pingxx.bean.Event}
+     * 将 webhooks接收到的json数据传入，获得 {@link com.xnx3.j2ee.module.pingxx.bean.Event}
      * @param dataString  webhooks接收到的json数据
      * @param sign header的签名
-     * @return 成功，返回 {@link xnx3.j2ee.module.pingxx.bean.Event},失败返回null
+     * @return 成功，返回 {@link com.xnx3.j2ee.module.pingxx.bean.Event},失败返回null
      */
-    private static xnx3.j2ee.module.pingxx.bean.Event getEventByContent(String dataString, String sign){
+    private static com.xnx3.j2ee.module.pingxx.bean.Event getEventByContent(String dataString, String sign){
     	try {
 			if(verifyData(dataString, sign, getPubKey())){
 				Event ev = Webhooks.eventParse(dataString);
-				xnx3.j2ee.module.pingxx.bean.Event event = new xnx3.j2ee.module.pingxx.bean.Event();
+				com.xnx3.j2ee.module.pingxx.bean.Event event = new com.xnx3.j2ee.module.pingxx.bean.Event();
 				event.setCreated(ev.getCreated());
 				event.setData(ev.getData());
 				event.setId(ev.getId());
@@ -206,10 +206,10 @@ public class PingxxUtil {
      * ping++异步回调传回的参数，直接调用此方法，拿到值
      * @param request {@link HttpServletRequest}
      * @param response {@link HttpServletResponse}
-     * @return 若成功，返回 {@link xnx3.j2ee.module.pingxx.bean.Event} 若失败，返回null
+     * @return 若成功，返回 {@link com.xnx3.j2ee.module.pingxx.bean.Event} 若失败，返回null
      * @throws IOException
      */
-    public static xnx3.j2ee.module.pingxx.bean.Event webhooks(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public static com.xnx3.j2ee.module.pingxx.bean.Event webhooks(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	request.setCharacterEncoding("UTF8");
         // 获得 http body 内容
         BufferedReader reader = request.getReader();
@@ -222,7 +222,7 @@ public class PingxxUtil {
         
         String sign = request.getHeader("X-Pingplusplus-Signature");	//签名
         String dataString = buffer.toString();
-        xnx3.j2ee.module.pingxx.bean.Event event = getEventByContent(dataString, sign);
+        com.xnx3.j2ee.module.pingxx.bean.Event event = getEventByContent(dataString, sign);
     	return event;
     }
     

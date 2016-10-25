@@ -1,12 +1,12 @@
-package xnx3.weixin;
+package com.xnx3.weixin;
 
-import xnx3.ConfigManagerUtil;
-import xnx3.DateUtil;
-import xnx3.Lang;
-import xnx3.net.HttpResponse;
-import xnx3.net.HttpUtil;
-import xnx3.weixin.bean.AccessToken;
-import xnx3.weixin.bean.UserInfo;
+import com.xnx3.ConfigManagerUtil;
+import com.xnx3.DateUtil;
+import com.xnx3.Lang;
+import com.xnx3.net.HttpResponse;
+import com.xnx3.net.HttpUtil;
+import com.xnx3.weixin.bean.AccessToken;
+import com.xnx3.weixin.bean.UserInfo;
 import net.sf.json.JSONObject;
 
 /**

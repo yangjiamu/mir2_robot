@@ -1,6 +1,6 @@
-package xnx3.net;
+package com.xnx3.net;
 
-import xnx3.ConfigManagerUtil;
+import com.xnx3.ConfigManagerUtil;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -59,20 +59,20 @@ public class MailUtil {
 		Transport trans = null;
 		try {  
 			//根据属性新建一个邮件会话  
-			Session mailSession = Session.getInstance(properties,  
-			new Authenticator() {  
-				public PasswordAuthentication getPasswordAuthentication() {  
-					  return new PasswordAuthentication(username,password);  
+			Session mailSession = Session.getInstance(properties,
+			new Authenticator() {
+				public PasswordAuthentication getPasswordAuthentication() {
+					  return new PasswordAuthentication(username,password);
 				  }
 			});  
 			mailSession.setDebug(debug);  
 			//建立消息对象  
-			MimeMessage mailMessage = new MimeMessage(mailSession);  
+			MimeMessage mailMessage = new MimeMessage(mailSession);
 			//发件人  
 			mailMessage.setFrom(new InternetAddress(username));  	//xnx3_cs@163.com
 			//收件人  
-			mailMessage.setRecipient(MimeMessage.RecipientType.TO,  
-			new InternetAddress(targetMail));  
+			mailMessage.setRecipient(MimeMessage.RecipientType.TO,
+			new InternetAddress(targetMail));
 			//主题  
 			mailMessage.setSubject(title);  
 			//内容  

@@ -1,4 +1,4 @@
-package xnx3.media;
+package com.xnx3.media;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -272,7 +272,7 @@ public class ImageUtil {
      * 将 {@link BufferedImage} 保存到本地
      * @param bufferedImage 要保存的内存图像
      * @param formatName 如 jpg、 png、gif 
-     * @param path 本地路径，如 /images/xnx3/ceshiaaaa.png
+     * @param path 本地路径，如 /images/com.xnx3/ceshiaaaa.png
      */
     public static void saveToLocalhost(BufferedImage bufferedImage, String formatName, String path){
     	File f=new File(path);
@@ -298,9 +298,9 @@ public class ImageUtil {
     }
     
     public static void main(String[] args) throws IOException {
-    	BufferedImage bufferedImage = loadLocalhostImage("/images/xnx3/qrcode_for_gh_674025ffa56e_430.jpg");
+    	BufferedImage bufferedImage = loadLocalhostImage("/images/com.xnx3/qrcode_for_gh_674025ffa56e_430.jpg");
         BufferedImage tag = formatConversion(bufferedImage);
-		saveToLocalhost(tag, "png", "/images/xnx3/ceshi.png");
+		saveToLocalhost(tag, "png", "/images/com.xnx3/ceshi.png");
 	}
     
 	

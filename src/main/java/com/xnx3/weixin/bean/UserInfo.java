@@ -1,4 +1,4 @@
-package xnx3.weixin.bean;
+package com.xnx3.weixin.bean;
 
 /**
  * 获取到的微信的用户信息

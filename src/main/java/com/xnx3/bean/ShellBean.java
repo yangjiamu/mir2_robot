@@ -1,4 +1,4 @@
-package xnx3.bean;
+package com.xnx3.bean;
 /**
  * Shell相关
  * @author 管雷鸣

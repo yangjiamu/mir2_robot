@@ -1,4 +1,4 @@
-package xnx3;
+package com.xnx3;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
@@ -52,7 +52,7 @@ public class SystemUtil {
 	}
 	
 	/**
-	 * 获取当前项目路径，用户的当前工作目录，如当前项目名为xnx3，则会获得其绝对路径 "E:\MyEclipseWork\xnx3"
+	 * 获取当前项目路径，用户的当前工作目录，如当前项目名为xnx3，则会获得其绝对路径 "E:\MyEclipseWork\com.xnx3"
 	 * @return 项目路径
 	 */
 	public static String getCurrentDir(){

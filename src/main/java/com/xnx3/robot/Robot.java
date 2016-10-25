@@ -1,12 +1,11 @@
-package xnx3.robot;
+package com.xnx3.robot;
 
-
-import xnx3.Lang;
-import xnx3.SystemUtil;
-import xnx3.UI;
-import xnx3.media.ColorUtil;
-import xnx3.robot.support.CoordBean;
-import xnx3.robot.support.RgbImageComparerBean;
+import com.xnx3.Lang;
+import com.xnx3.SystemUtil;
+import com.xnx3.UI;
+import com.xnx3.media.ColorUtil;
+import com.xnx3.robot.support.CoordBean;
+import com.xnx3.robot.support.RgbImageComparerBean;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -88,88 +87,6 @@ public class Robot{
 	 */
 	public void setSourcePath(Class c){
 		this.useClass = c;
-	}
-
-	public int charToKey(char c){
-		switch (c) {
-			case 'a':
-				return KeyEvent.VK_A;
-			case 'b':
-				return KeyEvent.VK_B;
-			case 'c':
-				return KeyEvent.VK_C;
-			case 'd':
-				return KeyEvent.VK_D;
-			case 'e':
-				return KeyEvent.VK_E;
-			case 'f':
-				return KeyEvent.VK_F;
-			case 'g':
-				return KeyEvent.VK_G;
-			case 'h':
-				return KeyEvent.VK_H;
-			case 'i':
-				return KeyEvent.VK_I;
-			case 'j':
-				return KeyEvent.VK_J;
-			case 'k':
-				return KeyEvent.VK_K;
-			case 'l':
-				return KeyEvent.VK_L;
-			case 'm':
-				return KeyEvent.VK_M;
-			case 'n':
-				return KeyEvent.VK_N;
-			case 'o':
-				return KeyEvent.VK_O;
-			case 'p':
-				return KeyEvent.VK_P;
-			case 'q':
-				return KeyEvent.VK_Q;
-			case 'r':
-				return KeyEvent.VK_R;
-			case 's':
-				return KeyEvent.VK_S;
-			case 't':
-				return KeyEvent.VK_T;
-			case 'u':
-				return KeyEvent.VK_U;
-			case 'v':
-				return KeyEvent.VK_V;
-			case 'w':
-				return KeyEvent.VK_W;
-			case 'x':
-				return KeyEvent.VK_X;
-			case 'y':
-				return KeyEvent.VK_Y;
-			case 'z':
-				return KeyEvent.VK_Z;
-			case '0':
-				return KeyEvent.VK_0;
-			case '1':
-				return KeyEvent.VK_1;
-			case '2':
-				return KeyEvent.VK_2;
-			case '3':
-				return KeyEvent.VK_3;
-			case '4':
-				return KeyEvent.VK_4;
-			case '5':
-				return KeyEvent.VK_5;
-			case '6':
-				return KeyEvent.VK_6;
-			case '7':
-				return KeyEvent.VK_7;
-			case '8':
-				return KeyEvent.VK_8;
-			case '9':
-				return KeyEvent.VK_9;
-			case '.':
-				return KeyEvent.VK_PERIOD;
-			default:
-				break;
-		}
-		return 0;
 	}
 	
 	/**
@@ -473,7 +390,7 @@ public class Robot{
 	 * @param yStart 截图指定区域的开始Y坐标
 	 * @param xEnd 截图指定区域的结束X坐标
 	 * @param yEnd 截图指定区域的结束Y坐标
-	 * @param filePath 截图保存的路径，如： /Users/apple/Desktop/xnx3.png
+	 * @param filePath 截图保存的路径，如： /Users/apple/Desktop/com.xnx3.png
 	 */
 	public void screenCapture(int xStart, int yStart, int xEnd, int yEnd, String filePath){
         BufferedImage image = robot.createScreenCapture(new Rectangle(xStart, yStart, xEnd-xStart,yEnd-yStart));
@@ -490,7 +407,7 @@ public class Robot{
 
 	/**
 	 * 全屏截图，保存为本地文件
-	 * @param filePath 截图保存的路径，如： /Users/apple/Desktop/xnx3.png
+	 * @param filePath 截图保存的路径，如： /Users/apple/Desktop/com.xnx3.png
 	 * @return {@link BufferedImage}
 	 */
 	public void screenCapture(String filePath){
@@ -501,7 +418,7 @@ public class Robot{
 	/**
 	 * 将 {@link BufferedImage} 保存为本地图像文件
 	 * @param image 要保存的图像
-	 * @param filePath 保存至本地的文件路径，如： /Users/apple/Desktop/xnx3.png
+	 * @param filePath 保存至本地的文件路径，如： /Users/apple/Desktop/com.xnx3.png
 	 */
 	public void saveScreenCapture(BufferedImage image, String filePath){
 		try {
@@ -516,9 +433,9 @@ public class Robot{
 	 * 	<ul>
 	 * 		<li> 需先调用 {@link #setSourcePath(Class)} 方法设置资源文件路径。这个只执行一次便可。读取的资源文件都是在当前类文件下的res文件夹下
 	 * 	</ul>
-	 * @param fileName 资源文件的文件名，如： xnx3.png  
+	 * @param fileName 资源文件的文件名，如： com.xnx3.png
 	 * 			<ul>
-	 * 				<li>xnx3.png 这个文件是在{@link #setSourcePath(Class)}传入的类的当前目录，有res文件夹，xnx3.png在res文件夹内
+	 * 				<li>com.xnx3.png 这个文件是在{@link #setSourcePath(Class)}传入的类的当前目录，有res文件夹，com.xnx3.png在res文件夹内
 	 * 			</ul>
 	 * @return 若没找到、失败，返回null
 	 */
@@ -579,7 +496,7 @@ public class Robot{
 	 * 	<pre>
 	 * 		Robot robot = new Robot();
 	 *		robot.setSourcePath(当前类.class);
-	 *		List<CoordBean> list = robot.imageSearch(0, 0, 100, 200, "xnx3.png", Robot.SIM_ACCURATE);
+	 *		List<CoordBean> list = robot.imageSearch(0, 0, 100, 200, "com.xnx3.png", Robot.SIM_ACCURATE);
 	 *  </pre>
 	 * <li>使用此方法前必须先设置：{{@link #setSourcePath(Class)}，不然找不到传入的图片在何处。robot创建后只需设置一次便可
 	 * <li>图片搜索顺序为 由上向下，由左向右
@@ -847,9 +764,9 @@ public class Robot{
 	 * 		<li>图片搜索顺序为 由上向下，由左向右
 	 * 		<li> 需先调用 {@link #setSourcePath(Class)} 方法设置资源文件路径。这个只执行一次便可。读取的资源文件都是在当前类文件下的res文件夹下
 	 * 	</ul>
-	 * @param imageName 资源文件的文件名，如： xnx3.png  
+	 * @param imageName 资源文件的文件名，如： com.xnx3.png
 	 * 			<ul>
-	 * 				<li>xnx3.png 这个文件是在{@link #setSourcePath(Class)}传入的类的当前目录，有res文件夹，xnx3.png在res文件夹内
+	 * 				<li>com.xnx3.png 这个文件是在{@link #setSourcePath(Class)}传入的类的当前目录，有res文件夹，com.xnx3.png在res文件夹内
 	 * 			</ul>
 	 * @param sim 模糊值，值： 
 	 * 				<ul>

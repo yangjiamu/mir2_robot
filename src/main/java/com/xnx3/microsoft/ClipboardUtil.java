@@ -1,4 +1,4 @@
-package xnx3.microsoft;
+package com.xnx3.microsoft;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;

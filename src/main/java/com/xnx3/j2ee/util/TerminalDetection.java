@@ -1,4 +1,4 @@
-package xnx3.j2ee.util;
+package com.xnx3.j2ee.util;
 
 import eu.bitwalker.useragentutils.UserAgent;
 
@@ -19,14 +19,14 @@ public class TerminalDetection {
      * @param request {@link HttpServletRequest}
      * @return true:移动设备接入，false:pc端接入 
      */  
-    public static boolean checkMobileOrPc(HttpServletRequest request){    
+    public static boolean checkMobileOrPc(HttpServletRequest request){
     	String userAgents = request.getHeader("User-Agent").toLowerCase();
     	boolean isMobile = true;
     	if(userAgents == null){
     		return true;
     	}
     	
-    	UserAgent userAgent = UserAgent.parseUserAgentString(userAgents); 
+    	UserAgent userAgent = UserAgent.parseUserAgentString(userAgents);
     	if(userAgent == null){
     		return true;
     	}

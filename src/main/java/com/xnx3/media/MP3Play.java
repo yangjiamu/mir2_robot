@@ -1,6 +1,6 @@
-package xnx3.media;
+package com.xnx3.media;
 
-import xnx3.file.FileUtil;
+import com.xnx3.file.FileUtil;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -17,8 +17,8 @@ public class MP3Play {
     private Player player;
 	
     /**
-     * @param filePath	MP3文件的绝对路径，如 E:/xnx3/test.mp3
-     * @throws JavaLayerException 
+     * @param filePath	MP3文件的绝对路径，如 E:/com.xnx3/test.mp3
+     * @throws JavaLayerException
      * @throws FileNotFoundException
      */
     public MP3Play(String filePath) throws JavaLayerException, FileNotFoundException {
@@ -34,11 +34,11 @@ public class MP3Play {
      * 开始播放
      * @throws JavaLayerException
      */
-    public void play() throws JavaLayerException{
+    public void play() throws JavaLayerException {
     	player.play();
     }
  
-    public static void main(String[] args) throws FileNotFoundException, JavaLayerException{
+    public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
         new MP3Play("/music/asd.mp3").play();
     }
 }

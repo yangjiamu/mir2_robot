@@ -1,4 +1,4 @@
-package xnx3.file;
+package com.xnx3.file;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -17,7 +17,7 @@ public class FileUtil {
 	
 	/**
 	 * 读文件，返回文件文本信息，默认编码UTF-8
-	 * @param path 文件路径 C:\xnx3.txt
+	 * @param path 文件路径 C:\com.xnx3.txt
 	 * @return String 读取的文件文本信息
 	 */
 	public static String read(String path){
@@ -26,7 +26,7 @@ public class FileUtil {
 	
 	/**
 	 * 读文件，返回文件文本信息
-	 * @param path 文件路径 C:\xnx3.txt
+	 * @param path 文件路径 C:\com.xnx3.txt
 	 * @param encode 文件编码.如 FileUtil.GBK
 	 * @return String 返回的文件文本信息
 	 */
@@ -358,6 +358,6 @@ public class FileUtil {
 
     public static void main(String[] args) throws IOException {
 //		downFileaa("http://www.xnx3.com/down/java/j2se_util.zip", "/music/a.zip");
-    	downFile("http://www.xnx3.com/down/java/j2se_util.zip", "/music/a.zip");
+    	downFile("http://www.com.xnx3.com/down/java/j2se_util.zip", "/music/a.zip");
 	}
 }

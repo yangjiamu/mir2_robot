@@ -464,7 +464,7 @@ public class Lang {
 	
 	/**
 	 * 传入一个文件名、或者文件的路径，获取其文件的后缀名
-	 * @param text 如: xnx3.jar  或者 /Users/apple/xnx3.jar
+	 * @param text 如: com.xnx3.jar  或者 /Users/apple/com.xnx3.jar
 	 * @return 后缀，如txt、jar......如果没有获得到，则返回null
 	 */
 	public static String findFileSuffix(String text){

@@ -1,10 +1,10 @@
-package xnx3.net;
+package com.xnx3.net;
 
 import ch.ethz.ssh2.ChannelCondition;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
-import xnx3.bean.ShellBean;
+import com.xnx3.bean.ShellBean;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +23,7 @@ import java.nio.charset.Charset;
  *
  */
 public class SSHUtil {
-    private Connection conn; 
+    private Connection conn;
     private String ip;	 //远程机器IP
     private String username; //用户名
     private String password; //密码
@@ -43,7 +43,7 @@ public class SSHUtil {
      * @throws IOException
      */
     public boolean open(){ 
-        conn = new Connection(ip); 
+        conn = new Connection(ip);
         try {
 			conn.connect();
 			return conn.authenticateWithPassword(this.username, this.password); 
@@ -65,16 +65,16 @@ public class SSHUtil {
         InputStream stdOut = null;
         InputStream stdErr = null;
         try { 
-            Session session = conn.openSession(); 
+            Session session = conn.openSession();
             session.execCommand(cmd); 
             
-            stdOut = new StreamGobbler(session.getStdout()); 
+            stdOut = new StreamGobbler(session.getStdout());
             shellBean.setOutString(processStream(stdOut, charset)); 
             
-            stdErr = new StreamGobbler(session.getStderr()); 
+            stdErr = new StreamGobbler(session.getStderr());
             shellBean.setErrorString(processStream(stdErr, charset));
             
-            session.waitForCondition(ChannelCondition.EXIT_STATUS, TIME_OUT); 
+            session.waitForCondition(ChannelCondition.EXIT_STATUS, TIME_OUT);
             
             shellBean.setExitStatus(session.getExitStatus()); 
         } finally { 

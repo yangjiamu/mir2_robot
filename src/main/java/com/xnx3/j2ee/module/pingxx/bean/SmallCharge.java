@@ -1,4 +1,4 @@
-package xnx3.j2ee.module.pingxx.bean;
+package com.xnx3.j2ee.module.pingxx.bean;
 
 import com.pingplusplus.model.Charge;
 

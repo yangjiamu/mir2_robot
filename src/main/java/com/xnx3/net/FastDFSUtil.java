@@ -1,8 +1,8 @@
-package xnx3.net;
+package com.xnx3.net;
 
-import xnx3.ConfigManagerUtil;
-import xnx3.Lang;
-import xnx3.bean.UploadBean;
+import com.xnx3.ConfigManagerUtil;
+import com.xnx3.Lang;
+import com.xnx3.bean.UploadBean;
 import org.csource_.common.MyException;
 import org.csource_.common.NameValuePair;
 import org.csource_.fastdfs.*;
@@ -71,7 +71,7 @@ public class FastDFSUtil{
   		}
   		ClientGlobal.defaultSuffix = ConfigManagerUtil.getSingleton("xnx3Config.xml").getValue("FastDFS.default_fileSuffix");
   		if (ClientGlobal.defaultSuffix == null || ClientGlobal.defaultSuffix.length() == 0){
-  			ClientGlobal.defaultSuffix = "xnx3";
+  			ClientGlobal.defaultSuffix = "com/xnx3";
   		}
   		
   		List<String> list= ConfigManagerUtil.getSingleton("xnx3Config.xml").getList("FastDFS.tracker_servers.tracker_server");
@@ -181,9 +181,9 @@ public class FastDFSUtil{
 	public UploadBean upload(String local_filename) {
 		String[] results=null;
 		try {
-			String suffix = xnx3.Lang.findFileSuffix(local_filename);
+			String suffix = com.xnx3.Lang.findFileSuffix(local_filename);
 			if(suffix==null){
-				suffix=ClientGlobal.defaultSuffix;
+				suffix= ClientGlobal.defaultSuffix;
 			}
 			results = client.upload_file(local_filename, suffix, meta_list);
 		} catch (IOException | MyException e) {

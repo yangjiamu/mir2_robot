@@ -21,7 +21,7 @@ public class Log {
 	
 	/**
 	 * 调试日志输出
-	 * @param className 当前class名字，加包名全名，如 com.xnx3.Log
+	 * @param className 当前class名字，加包名全名，如 com.com.xnx3.Log
 	 * @param method 那个类那个方法，如 debug 后面不加()，只是方法名字
 	 * @param message 日志信息
 	 */

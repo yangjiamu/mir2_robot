@@ -1,11 +1,8 @@
-package mir2;
-
-import xnx3.microsoft.Com;
-import xnx3.microsoft.Window;
-import xnx3.robot.Robot;
+import com.xnx3.microsoft.Com;
+import com.xnx3.microsoft.Window;
+import com.xnx3.robot.Robot;
 
 import java.awt.event.KeyEvent;
-
 /**
  * Created by yangwenjie on 16/10/24.
  */
@@ -43,7 +40,7 @@ public class FirstMir2 {
     public static void say(String str){
         robot.press((int) KeyEvent.KEY_EVENT_MASK);
         for (int i = 0; i < str.length(); i++) {
-            robot.press(robot.charToKey(str.charAt(i)));
+            robot.press(robot.StringToKey(str.substring(i, i+1)));
         }
         robot.press((int) KeyEvent.KEY_EVENT_MASK);
     }

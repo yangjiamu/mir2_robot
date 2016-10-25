@@ -1,6 +1,6 @@
-package xnx3.net;
+package com.xnx3.net;
 
-import xnx3.ConfigManagerUtil;
+import com.xnx3.ConfigManagerUtil;
 import push.AndroidNotification;
 import push.PushClient;
 import push.UmengNotification;

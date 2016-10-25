@@ -1,4 +1,4 @@
-package xnx3.media;
+package com.xnx3.media;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;

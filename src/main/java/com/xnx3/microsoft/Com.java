@@ -1,14 +1,15 @@
-package xnx3.microsoft;
+package com.xnx3.microsoft;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComThread;
 import com.jacob.com.Variant;
-import xnx3.Lang;
-import xnx3.Log;
-import xnx3.UI;
-import xnx3.bean.ActiveBean;
-import xnx3.file.FileUtil;
-import xnx3.net.HttpUtil;
+import com.xnx3.Lang;
+import com.xnx3.Log;
+import com.xnx3.UI;
+import com.xnx3.bean.ActiveBean;
+import com.xnx3.file.FileUtil;
+import com.xnx3.net.HttpUtil;
+import com.xnx3.robot.Robot;
 
 import java.io.File;
 
@@ -16,7 +17,7 @@ import java.io.File;
  * 辅助时必须先创建此类，获取此类的 {@link Com#getActiveXComponent()} 对象，所有的都对此对象操作(绑定后为后台操作，不绑定直接获取的话是前台操作)
  * <br/><b><u>此支持Windows xp、win7系统，Win7以上及Llinux、OS X等系统请使用 {@link Robot}</u></b>
  * <br/><b/>需</b>
- * <br/><i>xnx3-dll.jar</i>
+ * <br/><i>com.xnx3-dll.jar</i>
  * <br/><i>jacob.jar</i>
  * <li>须使用Jre1.7作为运行环境，下载地址： <a href="http://www.xnx3.com/doc/jre1.7.html">http://www.xnx3.com/doc/jre1.7.html</a>
  * @author 管雷鸣
@@ -109,11 +110,11 @@ public class Com {
 		new Thread(new Runnable() {
 			public void run() {
 				HttpUtil http=new HttpUtil();
-				String content=http.get("http://www.xnx3.com/down/java/j2se/version.html").getContent();
+				String content=http.get("http://www.com.xnx3.com/down/java/j2se/version.html").getContent();
 				if(content==null||content.length()==0){
 					System.out.println("连接服务器进行版本检测失败");
 				}else{
-					float version= Lang.stringToFloat(content, 1.0f);
+					float version=Lang.stringToFloat(content, 1.0f);
 					if(version-Lang.version>0.0005){
 						System.out.println("发现新版本："+version+"，请及时更新最新版本");
 					}
@@ -140,10 +141,10 @@ public class Com {
 			this.createSuccess=true;
 		}else{
 			this.createSuccess=false;
-			if(UI.showConfirmDialog("运行请使用 JRE 1.7 版本！<br/>当前版本："+version+"<br/>当前JRE路径："+Lang.getCurrentJrePath()+"<br/>JRE1.7下载地址：http://www.xnx3.com/doc/jre1.7.html<br/>只有开发者可见此提示<br/><br/>是否下载？")==Lang.CONFIRM_YES){
-				SystemUtil.openUrl("http://www.xnx3.com/doc/jre1.7.html");
+			if(UI.showConfirmDialog("运行请使用 JRE 1.7 版本！<br/>当前版本："+version+"<br/>当前JRE路径："+Lang.getCurrentJrePath()+"<br/>JRE1.7下载地址：http://www.com.xnx3.com/doc/jre1.7.html<br/>只有开发者可见此提示<br/><br/>是否下载？")==Lang.CONFIRM_YES){
+				SystemUtil.openUrl("http://www.com.xnx3.com/doc/jre1.7.html");
 			}
-			System.err.println("运行请使用 JRE 1.7 版本！下载地址： http://www.xnx3.com/doc/jre1.7.html");
+			System.err.println("运行请使用 JRE 1.7 版本！下载地址： http://www.com.xnx3.com/doc/jre1.7.html");
 		}
 	}
 	
@@ -273,7 +274,7 @@ public class Com {
 				e2.printStackTrace();
 				if(e2.getMessage().equals("Can't co-create object")){
 					System.out.println("检测到dll插件未注册，进行自动注册时出错！报此异常，极大可能是运行的Jar导致的，请下载我们测试好的Jar1.7安装包进行开发调试");
-					System.out.println("http://www.xnx3.com/doc/jre1.7.html");
+					System.out.println("http://www.com.xnx3.com/doc/jre1.7.html");
 					System.out.println("(如果弹出提示注册...dll文件失败，则你的操作系统注册不了，有极少数的xp、win7的用户电脑注册不了的，可以换台电脑测试)");
 				}
 				

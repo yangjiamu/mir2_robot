@@ -1,6 +1,6 @@
-package xnx3;
+package com.xnx3;
 
-import xnx3.file.FileUtil;
+import com.xnx3.file.FileUtil;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.BusinessBlackSteelSkin;
 import org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel;
@@ -94,7 +94,7 @@ public class UI {
 			JFrame.setDefaultLookAndFeelDecorated(true);
 			JDialog.setDefaultLookAndFeelDecorated(true);
 			if(watermarkBackgroundImage!=null){
-				class mySkin extends BusinessBlackSteelSkin{
+				class mySkin extends BusinessBlackSteelSkin {
 					public mySkin(){
 						super();
 						//新建一个图片水印，路径可以自己该，使用自己喜欢的图片来做应用程序的水印图片、  
@@ -107,7 +107,7 @@ public class UI {
 				SubstanceLookAndFeel.setSkin(new mySkin());
 			}
 		} catch (Exception e) {
-			new Log().debug("com.xnx3.UI", "UseLookAndFeelBySubstance()", e.getMessage());
+			new Log().debug("com.com.xnx3.UI", "UseLookAndFeelBySubstance()", e.getMessage());
 		}
 		
 		return substance;

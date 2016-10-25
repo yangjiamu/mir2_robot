@@ -1,9 +1,9 @@
-package xnx3.net;
+package com.xnx3.net;
 
 import com.jcraft.jsch.*;
 import com.jcraft.jsch.ChannelSftp.LsEntry;
-import xnx3.Log;
-import xnx3.bean.FileBean;
+import com.xnx3.Log;
+import com.xnx3.bean.FileBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,12 +179,12 @@ public class SFTPUtil {
         if (ls != null && ls.size() >= 0) {  
             List<FileBean> list = new ArrayList<FileBean>();
             for (int i = 0; i < ls.size(); i++) {  
-                LsEntry f = (LsEntry) ls.get(i);  
+                LsEntry f = (LsEntry) ls.get(i);
                 String nm = f.getFilename();
                 
                 if (nm.equals(".") || nm.equals(".."))  
                     continue;  
-                SftpATTRS attr = f.getAttrs();  
+                SftpATTRS attr = f.getAttrs();
                 FileBean fileBean=new FileBean();
                 if (attr.isDir()) {  
                     fileBean.setDir(true);
