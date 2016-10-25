@@ -1,4 +1,4 @@
-package xnx3;
+package com.xnx3;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.FileConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;

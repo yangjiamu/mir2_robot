@@ -1,4 +1,4 @@
-package xnx3;
+package com.xnx3;
 
 import com.swetake.util.Qrcode;
 

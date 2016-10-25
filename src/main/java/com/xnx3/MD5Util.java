@@ -1,4 +1,4 @@
-package xnx3;
+package com.xnx3;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

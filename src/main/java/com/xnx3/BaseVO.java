@@ -1,4 +1,4 @@
-package xnx3;
+package com.xnx3;
 
 /**
  * <b>result</b>：执行成功{@link #SUCCESS}/失败{@link #FAILURE}

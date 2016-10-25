@@ -1,4 +1,4 @@
-package xnx3;
+package com.xnx3;
 
 /**
  * 日志输出调试
