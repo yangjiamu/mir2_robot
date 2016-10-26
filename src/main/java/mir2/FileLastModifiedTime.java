@@ -12,7 +12,7 @@ public class FileLastModifiedTime {
     public static void main(String[] args) {
         File file = null;
         try {
-            file = new File("");
+            file = new File("C:\\Users\\yang\\Downloads\\Mir2online\\米尔在线\\Data\\Hum.wil");
             SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
             System.out.println("Original last modified time: " + df.format(file.lastModified()));
             Date date = df.parse("2006/07/24 11:06");
