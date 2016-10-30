@@ -11,7 +11,8 @@ import java.io.IOException;
  * Created by yangwenjie on 16/10/30.
  */
 public class ScreenCaptureTest {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Thread.sleep(1000 * 20);//wait for mir2 client to start and login
         Robot2 robot2 = new Robot2();
         BufferedImage bufferedImage = robot2.captureScreen();
         ImageIO.write(bufferedImage, "png", new File("C:/screen.png"));
