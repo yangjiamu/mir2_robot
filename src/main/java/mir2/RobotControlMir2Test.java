@@ -1,26 +1,38 @@
 package mir2;
 
-import com.xnx3.robot.Robot;
+
+import mir2.robot.Robot2;
 
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 /**
  * Created by yangwenjie on 16/10/25.
  */
 public class RobotControlMir2Test {
-    private static final Robot robot = new Robot();
+    private static final Robot2 robot = new Robot2();
 
     public static void main(String[] args) throws InterruptedException {
-        Thread.sleep(1000 * 20);
+        Thread.sleep(1000 * 60);
         say("hello");
     }
 
     public static void say(String str) {
-        robot.press((int) KeyEvent.VK_ENTER);
+        robot.pressKey((int) KeyEvent.VK_ENTER);
         for (int i = 0; i < str.length(); i++) {
-            System.out.println(i);
-            robot.press(robot.StringToKey(str.substring(i, i + 1)));
+            robot.pressKey(robot.characterToKeyCode(str.charAt(i)));
         }
-        robot.press((int) KeyEvent.VK_ENTER);
+        robot.pressKey((int) KeyEvent.VK_ENTER);
+    }
+
+    public static void randomWalk(){
+        int randomDirectionCode = new Random().nextInt(7);
+        WalkDirectionEnum randomDirection = WalkDirectionEnum.fromCode(randomDirectionCode);
+        prepareMouseForWalk(randomDirection);
+
+    }
+
+    public static void prepareMouseForWalk(WalkDirectionEnum directionEnum){
+        robot.mouseMove(directionEnum.getCoordination());
     }
 }

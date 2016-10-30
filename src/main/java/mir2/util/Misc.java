@@ -1,17 +1,17 @@
 package mir2.util;
 
+import mir2.map.MapTileInfo;
+import org.apache.log4j.Logger;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-
-import javax.imageio.ImageIO;
-
-import org.apache.log4j.Logger;
-import org.joot.jmir2.exception.JMir2Exception;
-import org.joot.jmir2.map.MapTileInfo;
 
 /** 一些不好归类的方法 */
 public class Misc {
@@ -27,7 +27,8 @@ public class Misc {
 	 */
 	public static ByteBuffer imageToIcon(String res) {
 		try {
-			InputStream is = Files.inputStream(res);
+			InputStream is = new FileInputStream(new File(res));
+			//InputStream is = Files.inputStream(res);
 			BufferedImage bi = ImageIO.read(is);
 			is.close();
 			byte[] data = ((DataBufferByte) bi.getRaster().getDataBuffer()).getData();
@@ -45,10 +46,8 @@ public class Misc {
 			buffer.flip();
 			return buffer;
 		} catch (IOException ex) {
-			JMir2Exception exception = JMir2Exception.valueOf(ex, JMir2Exception.EXCEPTION_TYPE_FILESTREAM);
-			log.error(exception.getMessage(), ex);
-			throw exception;
 		}
+		return null;
 	}
 	
 	/**

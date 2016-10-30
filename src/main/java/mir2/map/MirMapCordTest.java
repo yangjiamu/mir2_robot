@@ -26,9 +26,6 @@ public class MirMapCordTest {
         System.out.println(map.getTiles()[curX][curY+1].isCanWalk());
 
         BufferedImage bufferedImage = new BufferedImage(map.getWidth(), map.getHeight(), TYPE_INT_RGB);
-        Graphics2D graphics = bufferedImage.createGraphics();
-        graphics.setBackground(Color.white);
-        graphics.clearRect(0, 0, map.getWidth(), map.getHeight());
         MapTileInfo[][] tiles = map.getTiles();
         for (int i = 0; i < map.getWidth(); i++) {
             for (int j = 0; j < map.getHeight(); j++) {
