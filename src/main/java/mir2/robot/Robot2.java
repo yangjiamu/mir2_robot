@@ -20,7 +20,7 @@ public class Robot2 {
             KeyEvent.VK_7,KeyEvent.VK_8,KeyEvent.VK_9};
     private static int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private static int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    public void Robot2(){
+    public Robot2(){
         try {
             robot = new java.awt.Robot();
         } catch (AWTException e) {
