@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class Crawler {
     public static final String HOME_URL = "http://www.mir2wiki.cn";
-    public static final String ROOT_DIR = "C:/mir2info/";
 
     public static void main(String[] args) throws IOException {
 

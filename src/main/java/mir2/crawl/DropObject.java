@@ -1,11 +1,12 @@
 package mir2.crawl;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Created by yangwenjie on 16/10/30.
  */
-public class DropObject {
+public class DropObject implements Serializable{
     private String url;
     private String name;
     private int needLevel;
@@ -13,7 +14,6 @@ public class DropObject {
     private int weight;
     private int valueLevel;
     private byte[] pic;
-
     public String getUrl() {
         return url;
     }
@@ -72,14 +72,6 @@ public class DropObject {
 
     @Override
     public String toString() {
-        return "DropObject{" +
-                "url='" + url + '\'' +
-                ", name='" + name + '\'' +
-                ", needLevel=" + needLevel +
-                ", otherRestriction=" + otherRestriction +
-                ", weight=" + weight +
-                ", valueLevel=" + valueLevel +
-                ", pic=" + Arrays.toString(pic) +
-                '}';
+        return name;
     }
 }

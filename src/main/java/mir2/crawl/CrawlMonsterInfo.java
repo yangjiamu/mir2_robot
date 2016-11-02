@@ -1,8 +1,9 @@
 package mir2.crawl;
 
 import org.htmlparser.util.ParserException;
+import org.junit.Test;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -13,38 +14,60 @@ import java.util.regex.Pattern;
  */
 public class CrawlMonsterInfo {
     private static Crawler crawler = new Crawler();
-    private static final String root_dir="";
-    public static void main(String[] args) throws IOException, URISyntaxException, ParserException {
-        String content = crawler.getContent(Crawler.HOME_URL);
+    public static final String ROOT_DIR_WIN = "C:/mir2info/";
+    public static final String ROOT_DIR_MAC = "/Users/yangwenjie/Documents/mir2info";
+    public static final String MAPNAME2MONSTERINFO_WIN = ROOT_DIR_WIN + "/map2monster";
+    public static final String MAPNAME2MONSTERINFO_MAC = ROOT_DIR_MAC + "/map2monster";
+    public static final String MONSTERINFO_WIN = ROOT_DIR_WIN + "/monsterinfo";
+    public static final String MONSTERINFO_MAC = ROOT_DIR_MAC + "/monsterinfo";
 
-        Map<String, String> mapMonsterUrl = getMapMonsterUrl(content);
+    public static void main(String[] args) throws IOException, URISyntaxException, ParserException, InterruptedException {
+        String homePageContent = crawler.getContent(Crawler.HOME_URL);
+
+        Map<String, String> mapMonsterUrl = getMapMonsterUrl(homePageContent);//mapname->url the url page contain the monster occured in map
         Set<Map.Entry<String, String>> entries = mapMonsterUrl.entrySet();
 
-        Map<String, String> monsterName2Url = new HashMap<>();
-        /*for(Map.Entry<String, String> entry : entries) {
-            String url = Crawler.HOME_URL + entries.iterator().next().getValue();
+        Map<String, String> monsterName2UrlAll = new HashMap<>();
+        for(Map.Entry<String, String> entry : entries) {
+            String url = Crawler.HOME_URL + entry.getValue();
             String content1 = crawler.getContent(url);
             Map<String, String> monsterNameToUrl = getMonsterUrl(content1);
 
-            //monsterName2Url.putAll(monsterNameToUrl);
-        }*/
+            //do some save??
+            File rootFile = new File(MAPNAME2MONSTERINFO_MAC);
+            if(!rootFile.exists()){
+                rootFile.mkdir();
+            }
+            File file = new File(MAPNAME2MONSTERINFO_MAC + "/" + entry.getKey() + ".txt");
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            for (Map.Entry<String, String> entry1 : monsterNameToUrl.entrySet()) {
+                fw.write(entry1.getValue() + "\n");
+                System.out.println(entry1.getValue());
+                fw.flush();
+            }
+            monsterName2UrlAll.putAll(monsterNameToUrl);
+        }
 
-
-        /*for (Map.Entry<String, String> stringStringEntry : monsterName2Url.entrySet()) {
-            System.out.println(stringStringEntry.getKey() + ":" + stringStringEntry.getValue());
-        }*/
-
-        /*String testUrl = "http://www.mir2wiki.cn/index.php?s=Home/index/map/tag/5/id/544/";
-        String content1 = crawler.getContent(testUrl);
-        Map<String, String> monsterUrl = getMonsterUrl(content1);
-        for (Map.Entry<String, String> stringStringEntry : monsterUrl.entrySet()) {
-            System.out.println(stringStringEntry.getKey() + ":" + stringStringEntry.getValue());
-        }*/
-
-        String monsterUrl = "http://www.mir2wiki.cn/index.php?s=Home/Index/guaiwu2/id/842";
-        List<DropObject> dropObjects = getMonsterInfo(monsterUrl);
-        for (DropObject dropObject : dropObjects) {
-            System.out.println(dropObject);
+        int i = 0;
+        for (Map.Entry<String, String> entry : monsterName2UrlAll.entrySet()) {
+            System.out.println(i++);
+            File rootFile = new File(MONSTERINFO_MAC);
+            if(!rootFile.exists()){
+                rootFile.mkdir();
+            }
+            File file = new File(MONSTERINFO_MAC + "/" + entry.getKey() + ".txt");
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+            String monsterUrl = Crawler.HOME_URL + entry.getValue();
+            Monster monster = getMonsterInfo(monsterUrl);
+            monster.setMonsterName(entry.getKey());
+            oos.writeObject(monster);
+            Thread.sleep(100);
         }
     }
 
@@ -70,6 +93,12 @@ public class CrawlMonsterInfo {
         return map;
     }
 
+    @Test
+    public void testGetMonsterUrl(){
+
+    }
+
+
     public static Map<String, String> getMonsterUrl(String content) throws IOException, URISyntaxException {
         Map<String, String> map = new HashMap<>();
         int i = content.indexOf("<table");
@@ -94,7 +123,7 @@ public class CrawlMonsterInfo {
             int end = content.substring(0, mark).lastIndexOf('\'');
             int begin = content.substring(0, end).lastIndexOf('\'');
             String nextPageUrl = Crawler.HOME_URL + content.substring(begin+1, end);
-            System.out.println(nextPageUrl.trim());
+            //System.out.println(nextPageUrl.trim());
             nextPageUrl = nextPageUrl.replaceAll(" ", "");
             String nextPageContent = crawler.getContent(nextPageUrl.trim());
             map.putAll(getMonsterUrl(nextPageContent));
@@ -102,11 +131,25 @@ public class CrawlMonsterInfo {
         return map;
     }
 
-    public static List<DropObject> getMonsterInfo(String monsterUrl) throws IOException, URISyntaxException, ParserException {
+    public static Monster getMonsterInfo(String monsterUrl) throws IOException, URISyntaxException, ParserException {
         List<DropObject> dropObjects = new ArrayList<>();
         String htmlContent = crawler.getContent(monsterUrl);
+
+        Monster monster = new Monster();
+        int occurBegin = htmlContent.indexOf("<p>该怪物出现在");
+        int occurEnd = htmlContent.indexOf("</p>", occurBegin);
+        String occurStr = htmlContent.substring(occurBegin, occurEnd);
+        Matcher occurMaatch = Pattern.compile("<a href=\".*?</a>", Pattern.DOTALL).matcher(occurStr);
+        List<String> mapNames = new ArrayList<>();
+        while (occurMaatch.find()){
+            String containMapNameStr = occurMaatch.group();
+            String mapName = containMapNameStr.substring(containMapNameStr.lastIndexOf('\"') + 2, containMapNameStr.lastIndexOf('<'));
+            mapNames.add(mapName);
+        }
+        monster.setOccuredMapNames(mapNames);
+
+        //parse drop object info
         String tbodyStr = htmlContent.substring(htmlContent.indexOf("<tbody>"), htmlContent.indexOf("</tbody>") + "</tbody>".length());
-        //System.out.println(tbodyStr);
         String regExp = "<tr>.*?</tr>";
         Pattern pattern = Pattern.compile(regExp, Pattern.DOTALL);
         Matcher matcher = pattern.matcher(tbodyStr);
@@ -117,14 +160,11 @@ public class CrawlMonsterInfo {
             int start = 0;
             int indexOfTdBegin = 0;
             int indexOfTdEnd = 0;
-            System.out.println("-------");
             DropObject dropObject = new DropObject();
             for (int i = 0; i < 7; i++) {
                 indexOfTdBegin = trStr.indexOf(tdBeginStr, start);
                 indexOfTdEnd = trStr.indexOf(tdEndStr, start);
                 String tdStr = trStr.substring(indexOfTdBegin, indexOfTdEnd + tdEndStr.length());
-                //System.out.println(tdStr);
-                //System.out.println("***********");
                 if(i==1){
                     Pattern p1 = Pattern.compile("<a href=\".*?</a>");
                     Matcher m1 = p1.matcher(tdStr);
@@ -139,26 +179,43 @@ public class CrawlMonsterInfo {
                 if(i==3){
                     int i1 = tdStr.indexOf('>');
                     int i2 = tdStr.lastIndexOf('<');
-                    String weight = tdStr.substring(i1+1, i2);
-                    dropObject.setWeight(Integer.parseInt(weight));
-                    //System.out.println(weight);
+                    String weightStr = tdStr.substring(i1+1, i2);
+                    int weight = -1;
+                    if (weightStr != null && !weightStr.equals(""))
+                        weight = Integer.parseInt(weightStr);
+                    dropObject.setWeight(weight);
                 }
                 if(i==5){
                     Matcher m5 = Pattern.compile("\\d+").matcher(tdStr);
-                    m5.find();
-                    String needRestriction = m5.group();
-                    if(tdStr.contains("等级")){
-                        dropObject.setNeedLevel(Integer.parseInt(needRestriction));
+                    if(m5.find()) {
+                        String needRestriction = m5.group();
+                        if (tdStr.contains("等级")) {
+                            dropObject.setNeedLevel(Integer.parseInt(needRestriction));
+                        } else {
+                            dropObject.setOtherRestriction(Integer.parseInt(needRestriction));
+                        }
                     }
                     else {
-                        dropObject.setOtherRestriction(Integer.parseInt(needRestriction));
+                        dropObject.setNeedLevel(-1);
+                        dropObject.setOtherRestriction(-1);
                     }
-                    //System.out.println(needRestriction);
                 }
                 start = indexOfTdEnd + tdEndStr.length();
             }
             dropObjects.add(dropObject);
         }
-        return dropObjects;
+
+        //处理分页
+        if(htmlContent.contains("下一页")){
+            int mark = htmlContent.indexOf("下一页");
+            int end = htmlContent.substring(0, mark).lastIndexOf('\'');
+            int begin = htmlContent.substring(0, end).lastIndexOf('\'');
+            String nextPageUrl = Crawler.HOME_URL + htmlContent.substring(begin+1, end);
+            //System.out.println(nextPageUrl.trim());
+            nextPageUrl = nextPageUrl.replaceAll(" ", "");
+            dropObjects.addAll(getMonsterInfo(nextPageUrl.trim()).getDropObjects());
+        }
+        monster.setDropObjects(dropObjects);
+        return monster;
     }
 }
