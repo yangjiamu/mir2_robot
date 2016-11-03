@@ -27,7 +27,8 @@ public class ScreenCaptureTest {
     }
 
     @Test
-    public void getCurrentWindowTest(){
+    public void getCurrentWindowTest() throws InterruptedException {
+        Thread.sleep(1000* 5);
         char[] buffer = new char[MAX_TITLE_LENGTH * 2];
         HWND hwnd = User32.INSTANCE.GetForegroundWindow();
         User32.INSTANCE.GetWindowText(hwnd, buffer, MAX_TITLE_LENGTH);
@@ -35,5 +36,9 @@ public class ScreenCaptureTest {
         RECT rect = new RECT();
         User32.INSTANCE.GetWindowRect(hwnd, rect);
         System.out.println("rect = " + rect);
+        System.out.println("bottom:" + rect.bottom);
+        System.out.println("top:" + rect.top);
+        System.out.println("left:" + rect.left);
+        System.out.println("right:"+ rect.right);
     }
 }
