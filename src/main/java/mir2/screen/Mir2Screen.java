@@ -14,7 +14,7 @@ public class Mir2Screen {
     private static final int MIR2_SCREEN_WIDTH = 1024;
     private static final int MIR2_SCREEN_HEIGHT = 768;
 
-    private static Mir2Screen instance = new Mir2Screen();
+    private static Mir2Screen instance = null;
     private static boolean windowExist = false;
 
     private int operationScreenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -28,7 +28,7 @@ public class Mir2Screen {
         char [] title = new char[MAX_TITLE_LENGTH*2];
         WinDef.HWND hwnd = User32.INSTANCE.GetForegroundWindow();
         User32.INSTANCE.GetWindowText(hwnd, title, MAX_TITLE_LENGTH);
-        if(MIR2_WINDOW_TITLE.equals(new String(title))){
+        if(MIR2_WINDOW_TITLE.equals(new String(title).trim())){
             windowExist = true;
             WinDef.RECT rect = new WinDef.RECT();
             User32.INSTANCE.GetWindowRect(hwnd, rect);
@@ -44,8 +44,11 @@ public class Mir2Screen {
         }
     }
 
-    public static Mir2Screen getMir2Screen(){
-        return windowExist ? instance : null;
+    public static synchronized Mir2Screen getMir2Screen(){
+        if(instance == null){
+            instance = new Mir2Screen();
+        }
+        return instance;
     }
 
     public static String getMir2WindowTitle() {

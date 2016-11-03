@@ -8,8 +8,9 @@ import org.junit.Test;
  */
 public class Mir2ScreenInfoTest {
     @Test
-    public void testMir2ScreenInfo(){
-        Mir2Screen mir2Screen = Mir2Screen.getMir2Screen();
+    public void testMir2ScreenInfo() throws InterruptedException {
+        Thread.sleep(1000 * 2);
+        Mir2Screen mir2Screen  = Mir2Screen.getMir2Screen();
         System.out.println(mir2Screen.getMir2TitleBarLeftTop());
         System.out.println(mir2Screen.getMir2TitleBarRightBottom());
         System.out.println(mir2Screen.getMir2ScreenLeftTop());
