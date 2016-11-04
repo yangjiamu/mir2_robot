@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
  * Created by yangwenjie on 16/10/27.
  */
 public class Mir2ScreenUtil {
-    private static final Robot2 robot = new Robot2();
+    private static final Robot2 robot = Robot2.getInstance();
     private static final int LEFT_TOP_X = 0;
     private static final int LEFT_TOP_Y = 0;
     private static final int MIR2_WINDOW_WIDTH = 1;

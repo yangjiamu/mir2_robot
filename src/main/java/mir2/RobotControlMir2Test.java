@@ -10,7 +10,7 @@ import java.util.Random;
  * Created by yangwenjie on 16/10/25.
  */
 public class RobotControlMir2Test {
-    private static final Robot2 robot = new Robot2();
+    private static final Robot2 robot = Robot2.getInstance();
 
     public static void main(String[] args) throws InterruptedException {
         Thread.sleep(1000 * 60);
