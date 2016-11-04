@@ -22,7 +22,7 @@ public class Mir2Screen {
     private static final int operationScreenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     private static Mir2Screen instance = new Mir2Screen();
-    private static boolean windowInitialized = false;
+    private static boolean initialized = false;
 
     private Point mir2TitleBarLeftTop;
     private Point mir2TitleBarRightBottom;
@@ -50,13 +50,13 @@ public class Mir2Screen {
             mir2TitleBarRightBottom = new Point(rect.right, rect.top + titleBarHeight);
             mir2ScreenLeftTop = new Point(rect.left, rect.top + titleBarHeight);
             mir2ScreenRightBottom = new Point(rect.right, rect.bottom - smallBarWidth);
-            windowInitialized = true;
+            initialized = true;
         }
 
     }
 
     public static synchronized Mir2Screen getMir2Screen(){
-        if(!windowInitialized) {
+        while (!initialized) {
             instance.init();
         }
         return instance;
@@ -90,8 +90,8 @@ public class Mir2Screen {
         Mir2Screen.instance = instance;
     }
 
-    public static boolean isWindowInitialized() {
-        return windowInitialized;
+    public static boolean isInitialized() {
+        return initialized;
     }
 
     public int getOperationScreenWidth() {

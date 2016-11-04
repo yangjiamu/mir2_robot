@@ -27,10 +27,7 @@ public class Mir2ScreenInfoTest {
 
     @Test
     public void testCaptureGameWindow() throws InterruptedException, IOException {
-        Mir2Screen mir2Screen = null;
-        while ((mir2Screen = Mir2Screen.getMir2Screen()) == null){
-            Thread.sleep(1000 * 1);
-        }
+        Mir2Screen mir2Screen = Mir2Screen.getMir2Screen();
         String path = "C:\\Users\\yang\\Pictures\\game_window.png";
         BufferedImage image = mir2Screen.getGameScreen();
         ImageIO.write(image, "png", new File(path));
