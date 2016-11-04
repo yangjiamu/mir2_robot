@@ -2,8 +2,10 @@ package mir2.screen;
 
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
+import mir2.robot.Robot2;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Created by yangwenjie on 16/11/3.
@@ -13,23 +15,30 @@ public class Mir2Screen {
     private static final int MAX_TITLE_LENGTH = 20;
     private static final int MIR2_SCREEN_WIDTH = 1024;
     private static final int MIR2_SCREEN_HEIGHT = 768;
+    private static final int MIR2_SMALL_BAG_LEFT_ALIGNMENT = 395;
+    private static final int MIR2_SMALL_BAG_TOP_ALIGNMENT = 572;
+    private static final int MIR2_SMALL_BAG_GRID_WIDTH = 0;
+    private static final int operationScreenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    private static final int operationScreenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-    private static Mir2Screen instance = null;
-    private static boolean windowExist = false;
+    private static Mir2Screen instance = new Mir2Screen();
+    private static boolean windowInitialized = false;
 
-    private int operationScreenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    private int operationScreenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     private Point mir2TitleBarLeftTop;
     private Point mir2TitleBarRightBottom;
     private Point mir2ScreenLeftTop;
     private Point mir2ScreenRightBottom;
-
+    private Point smallBagLeftTop;
+    private Point smallBagRightBottom;
     private Mir2Screen() {
+        init();
+    }
+    private Robot2 robot = Robot2.getInstance();
+    public void init(){
         char [] title = new char[MAX_TITLE_LENGTH*2];
         WinDef.HWND hwnd = User32.INSTANCE.GetForegroundWindow();
         User32.INSTANCE.GetWindowText(hwnd, title, MAX_TITLE_LENGTH);
         if(MIR2_WINDOW_TITLE.equals(new String(title).trim())){
-            windowExist = true;
             WinDef.RECT rect = new WinDef.RECT();
             User32.INSTANCE.GetWindowRect(hwnd, rect);
             mir2TitleBarLeftTop = new Point(rect.left, rect.top);
@@ -41,14 +50,20 @@ public class Mir2Screen {
             mir2TitleBarRightBottom = new Point(rect.right, rect.top + titleBarHeight);
             mir2ScreenLeftTop = new Point(rect.left, rect.top + titleBarHeight);
             mir2ScreenRightBottom = new Point(rect.right, rect.bottom - smallBarWidth);
+            windowInitialized = true;
         }
+
     }
 
     public static synchronized Mir2Screen getMir2Screen(){
-        if(instance == null){
-            instance = new Mir2Screen();
+        if(!windowInitialized) {
+            instance.init();
         }
         return instance;
+    }
+
+    public BufferedImage getGameScreen(){
+        return robot.captureScreen((int)mir2ScreenLeftTop.getX(), (int)mir2ScreenLeftTop.getY(), MIR2_SCREEN_WIDTH,MIR2_SCREEN_HEIGHT);
     }
 
     public static String getMir2WindowTitle() {
@@ -75,28 +90,16 @@ public class Mir2Screen {
         Mir2Screen.instance = instance;
     }
 
-    public static boolean isWindowExist() {
-        return windowExist;
-    }
-
-    public static void setWindowExist(boolean windowExist) {
-        Mir2Screen.windowExist = windowExist;
+    public static boolean isWindowInitialized() {
+        return windowInitialized;
     }
 
     public int getOperationScreenWidth() {
         return operationScreenWidth;
     }
 
-    public void setOperationScreenWidth(int operationScreenWidth) {
-        this.operationScreenWidth = operationScreenWidth;
-    }
-
     public int getOperationScreenHeight() {
         return operationScreenHeight;
-    }
-
-    public void setOperationScreenHeight(int operationScreenHeight) {
-        this.operationScreenHeight = operationScreenHeight;
     }
 
     public Point getMir2TitleBarLeftTop() {
