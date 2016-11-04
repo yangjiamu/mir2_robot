@@ -18,6 +18,8 @@ public class Mir2Screen {
     private static final int MIR2_SMALL_BAG_LEFT_ALIGNMENT = 395;
     private static final int MIR2_SMALL_BAG_TOP_ALIGNMENT = 572;
     private static final int MIR2_SMALL_BAG_GRID_WIDTH = 0;
+    private static final int MIR2_ROLE_LEFT_ALIGNMENT = 0;
+    private static final int MIR2_ROLE_TOP_ALIGNMENT = 0;
     private static final int operationScreenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private static final int operationScreenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
@@ -41,10 +43,7 @@ public class Mir2Screen {
         if(MIR2_WINDOW_TITLE.equals(new String(title).trim())){
             WinDef.RECT rect = new WinDef.RECT();
             User32.INSTANCE.GetWindowRect(hwnd, rect);
-            mir2TitleBarLeftTop = new Point(rect.left, rect.top);
-            mir2TitleBarRightBottom = new Point(rect.right, rect.bottom);
-            int titleBarWidth = rect.right - rect.left;
-            int smallBarWidth = (titleBarWidth - MIR2_SCREEN_WIDTH)/2;
+            int smallBarWidth = (rect.right - rect.left - MIR2_SCREEN_WIDTH)/2;
             int titleBarHeight = rect.bottom - rect.top - MIR2_SCREEN_HEIGHT - smallBarWidth;
             mir2TitleBarLeftTop = new Point(rect.left, rect.top);
             mir2TitleBarRightBottom = new Point(rect.right, rect.top + titleBarHeight);
@@ -64,6 +63,12 @@ public class Mir2Screen {
 
     public BufferedImage getGameScreen(){
         return robot.captureScreen((int)mir2ScreenLeftTop.getX(), (int)mir2ScreenLeftTop.getY(), MIR2_SCREEN_WIDTH,MIR2_SCREEN_HEIGHT);
+    }
+    public BufferedImage getTitleBarScreen(){
+        return robot.captureScreen((int)mir2TitleBarLeftTop.getX(),
+                (int)mir2TitleBarLeftTop.getY(),
+                (int)(mir2TitleBarRightBottom.getX() - mir2TitleBarLeftTop.getX()),
+                (int)(mir2TitleBarRightBottom.getY() - mir2TitleBarLeftTop.getY()));
     }
 
     public static String getMir2WindowTitle() {
