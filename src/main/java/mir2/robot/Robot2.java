@@ -20,12 +20,17 @@ public class Robot2 {
             KeyEvent.VK_7,KeyEvent.VK_8,KeyEvent.VK_9};
     private static int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private static int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    public Robot2(){
+    private static Robot2 instance = new Robot2();
+    private Robot2(){
         try {
             robot = new java.awt.Robot();
         } catch (AWTException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Robot2 getInstance(){
+        return instance;
     }
 
     public void delay(int mils){
@@ -120,6 +125,10 @@ public class Robot2 {
 
     public BufferedImage captureScreen(){
         return robot.createScreenCapture(new Rectangle(0, 0, screenWidth, screenHeight));
+    }
+
+    public BufferedImage captureScreen(int x, int y, int width, int height){
+        return robot.createScreenCapture(new Rectangle(x, y, width, height));
     }
 
     public java.awt.Robot getRobot(){
