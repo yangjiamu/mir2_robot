@@ -2,6 +2,7 @@ package mir2.screen;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.max.MaxCore;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -44,7 +45,8 @@ public class Mir2ScreenInfoTest {
     @Test
     public void locateHpBarLenAndCenter() throws IOException {
         BufferedImage image = ImageIO.read(new File("C:\\Users\\yang\\Pictures\\game_window_test_hpbar.png"));
-        Color color = new Color(255, 254, 54);
+        Color colorUp = new Color(227, 215, 47);
+        Color colorDown = new Color(254, 240, 53);
         //Color color1 = new Color(163, 152, 79);
         int upMax = 0;
         int downMax = 0;
@@ -59,8 +61,7 @@ public class Mir2ScreenInfoTest {
             int lenCur = 0;
             //up
             int y = centerY;
-            while (image.getRGB(x, y) != color.getRGB()){
-                System.out.println("y:" + y);
+            while (!rgbSimilar(image.getRGB(x, y), colorUp.getRGB())){
                 --y;
             }
             ++y;
@@ -70,7 +71,7 @@ public class Mir2ScreenInfoTest {
             }
             //down
             y = centerY;
-            while (image.getRGB(x, y) != color.getRGB()){
+            while (!rgbSimilar(image.getRGB(x, y), colorUp.getRGB())){
                 ++y;
             }
             --y;
@@ -88,11 +89,11 @@ public class Mir2ScreenInfoTest {
         }
         System.out.println("**********************************************************************");
         int y = centerY;
-        while (image.getRGB(realCenterX, y) != color.getRGB())--y;
+        while (image.getRGB(realCenterX, y) != colorUp.getRGB())--y;
         ++y;
         int upYMark = y;
         y = centerY;
-        while (image.getRGB(realCenterX, y) != color.getRGB())++y;
+        while (image.getRGB(realCenterX, y) != colorUp.getRGB())++y;
         --y;
         int downYMark = y;
         int realCenterY = upYMark + (downYMark - upYMark)/2;
@@ -101,5 +102,30 @@ public class Mir2ScreenInfoTest {
         System.out.println("oldY: " + Mir2Screen.getMir2HpCicleCenter().getY());
         System.out.println("realCenterX: " + realCenterX);
         System.out.println("realCenterY: " + realCenterY);
+    }
+
+    private static boolean rgbSimilar(int color1Rgb, int color2Rgb){
+        int[] ints = colorFromRgb(color1Rgb);
+        Color color1 = new Color(ints[0], ints[1], ints[2]);
+        int[] ints1 = colorFromRgb(color2Rgb);
+        Color color2 = new Color(ints1[0], ints1[1], ints1[2]);
+        return Math.abs(color1.getRed() - color2.getRed()) <= 30 &&
+                Math.abs(color1.getGreen() - color2.getGreen()) <= 30 &&
+                Math.abs(color1.getBlue() - color2.getBlue()) <= 30;
+    }
+
+    private static int[] colorFromRgb(int rgbVale){
+        int[] color = new int[3];
+        color[0] = (rgbVale & 0x00ff0000) >> 16;
+        color[1] = (rgbVale & 0x0000ff00) >> 8;
+        color[2] = rgbVale & 0x000000ff;
+        return color;
+    }
+
+    @Test
+    public void testColorSim(){
+        Color colorUp = new Color(227, 215, 47);
+        Color colorDown = new Color(254, 240, 53);
+        System.out.println(rgbSimilar(colorUp.getRGB(), colorDown.getRGB()));
     }
 }
