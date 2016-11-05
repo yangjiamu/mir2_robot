@@ -2,7 +2,6 @@ package mir2.screen;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.experimental.max.MaxCore;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -71,7 +70,7 @@ public class Mir2ScreenInfoTest {
             }
             //down
             y = centerY;
-            while (!rgbSimilar(image.getRGB(x, y), colorUp.getRGB())){
+            while (!rgbSimilar(image.getRGB(x, y), colorDown.getRGB())){
                 ++y;
             }
             --y;
@@ -89,11 +88,11 @@ public class Mir2ScreenInfoTest {
         }
         System.out.println("**********************************************************************");
         int y = centerY;
-        while (image.getRGB(realCenterX, y) != colorUp.getRGB())--y;
+        while (!rgbSimilar(image.getRGB(realCenterX, y), colorUp.getRGB()))--y;
         ++y;
         int upYMark = y;
         y = centerY;
-        while (image.getRGB(realCenterX, y) != colorUp.getRGB())++y;
+        while (!rgbSimilar(image.getRGB(realCenterX, y), colorUp.getRGB()))++y;
         --y;
         int downYMark = y;
         int realCenterY = upYMark + (downYMark - upYMark)/2;
@@ -109,9 +108,9 @@ public class Mir2ScreenInfoTest {
         Color color1 = new Color(ints[0], ints[1], ints[2]);
         int[] ints1 = colorFromRgb(color2Rgb);
         Color color2 = new Color(ints1[0], ints1[1], ints1[2]);
-        return Math.abs(color1.getRed() - color2.getRed()) <= 30 &&
-                Math.abs(color1.getGreen() - color2.getGreen()) <= 30 &&
-                Math.abs(color1.getBlue() - color2.getBlue()) <= 30;
+        return Math.abs(color1.getRed() - color2.getRed()) <= 80 &&
+                Math.abs(color1.getGreen() - color2.getGreen()) <= 80 &&
+                Math.abs(color1.getBlue() - color2.getBlue()) <= 80;
     }
 
     private static int[] colorFromRgb(int rgbVale){

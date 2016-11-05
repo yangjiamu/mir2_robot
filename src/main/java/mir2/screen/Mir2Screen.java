@@ -2,7 +2,6 @@ package mir2.screen;
 
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
-import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import mir2.robot.Robot2;
 
 import java.awt.*;
@@ -22,8 +21,8 @@ public class Mir2Screen {
     private static final int MIR2_SMALL_BAG_WIDTH = 30;
     private static final Point[] MIR2_SMALL_BAG_RELATIVE_POSITON = {new Point(400, 575), new Point(444, 575), new Point(488, 575),
             new Point(532, 575), new Point(576, 575), new Point(620, 575)};
-    private static final int MIR2_HP_BAR_LEN = 93;
-    private static final int MIR2_MP_BAR_LEN = 93;
+    private static final int MIR2_HP_BAR_LEN = 94;
+    private static final int MIR2_MP_BAR_LEN = 94;
     private static final Point MIR2_HP_CICLE_CENTER = new Point(85, 655);
     private static final int operationScreenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private static final int operationScreenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
