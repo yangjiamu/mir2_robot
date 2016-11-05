@@ -24,6 +24,7 @@ public class Mir2Screen {
     private static final int MIR2_HP_BAR_LEN = 94;
     private static final int MIR2_MP_BAR_LEN = 94;
     private static final Point MIR2_HP_CICLE_CENTER = new Point(85, 655);
+    private static final Point MIR2_HP_START = new Point(85, 608);
     private static final int operationScreenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private static final int operationScreenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
@@ -126,100 +127,20 @@ public class Mir2Screen {
         return smallBags;
     }
 
-    public int getHPBarLen(){
+    public BufferedImage getHPBar(){
+        return getGameScreen().getSubimage((int)MIR2_HP_START.getX() - 5, (int)(MIR2_HP_START.getY()),
+                1, MIR2_HP_BAR_LEN);
+    }
+    public BufferedImage getMPBar(){
+        return getGameScreen().getSubimage((int)MIR2_HP_START.getX() + 5, (int)(MIR2_HP_START.getY()),
+                1, MIR2_HP_BAR_LEN);
+    }
+
+    public static int getHPBarLen(){
         return MIR2_HP_BAR_LEN;
     }
-    public int getMPBarLen(){
+    public static int getMPBarLen(){
         return MIR2_MP_BAR_LEN;
-    }
-    public void locateHpBarLenAndCenter(){
-        BufferedImage image = getGameScreen();
-        Color color = new Color(255, 254, 54);
-        Color color1 = new Color(163, 152, 79);
-        int upMax = 0;
-        int upMax1 = 0;
-        int downMax = 0;
-        int downMax1 = 0;
-        int maxLen = 0;
-        int maxLen1 = 0;
-        int realCenterX = 0;
-
-        int centerY = (int)(MIR2_HP_CICLE_CENTER.getY());
-        for (int x = (int)(MIR2_HP_CICLE_CENTER.getX() - 20); x < (int)(MIR2_HP_CICLE_CENTER.getX() + 20); x++) {
-            int upCur = 0;
-            int upCur1 = 0;
-            int downCur = 0;
-            int downCur1 =0;
-
-            int lenCur = 0;
-            int lenCur1 = 0;
-            //up
-            int y = centerY;
-            while (image.getRGB(x, y) != color1.getRGB()){
-                --y;
-            }
-            ++y;
-            upCur1 = centerY - y + 1;
-            if(upMax1 < upCur1){
-                upMax1 = upCur1;
-            }
-            y = centerY;
-            while (image.getRGB(x, y) != color.getRGB()){
-                --y;
-            }
-            ++y;
-            upCur = centerY -y + 1;
-            if(upMax < upCur){
-                upMax = upCur;
-            }
-            //down
-            y = centerY;
-            while (image.getRGB(x, y) != color1.getRGB()){
-                ++y;
-            }
-            --y;
-            downCur1 = y - centerY + 1;
-            if(downMax1 < downCur1){
-                downMax1 = downCur1;
-            }
-            y = centerY;
-            while (image.getRGB(x, y) != color.getRGB()){
-                ++y;
-            }
-            --y;
-            downCur = y - centerY + 1;
-            if(downMax < downCur){
-                downMax = downCur;
-            }
-            lenCur1 = upCur1 + downCur1;
-            lenCur = upCur + downCur;
-            if(maxLen < lenCur) {
-                realCenterX = x;
-                maxLen = lenCur;
-            }
-            if(maxLen1 < lenCur1) {
-                realCenterX = x;
-                maxLen1 = lenCur1;
-            }
-            System.out.println("up1: " + upCur1 + "     down1: " + downCur1 + "     len1: " + lenCur1);
-            System.out.println("up:  " + upCur + "   down: " + downCur + "      len: " + lenCur);
-            System.out.println("----------------------------------------------------------------------");
-        }
-        System.out.println("**********************************************************************");
-        int y = centerY;
-        while (image.getRGB(realCenterX, y) != color1.getRGB())--y;
-        ++y;
-        int upYMark = y;
-        y = centerY;
-        while (image.getRGB(realCenterX, y) != color1.getRGB())++y;
-        --y;
-        int downYMark = y;
-        int realCenterY = upYMark + (downYMark - upYMark)/2;
-        System.out.println("maxLen: " + maxLen + "      maxLen1: " + maxLen1);
-        System.out.println("oldX: " + MIR2_HP_CICLE_CENTER.getX());
-        System.out.println("oldY: " + MIR2_HP_CICLE_CENTER.getY());
-        System.out.println("realCenterX: " + realCenterX);
-        System.out.println("realCenterY: " + realCenterY);
     }
 
     public static int getMir2ScreenWidth() {

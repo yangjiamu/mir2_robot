@@ -38,7 +38,6 @@ public class Mir2ScreenInfoTest {
     @Test
     public void testHPMP(){
         Mir2Screen mir2Screen = Mir2Screen.getMir2Screen();
-        mir2Screen.locateHpBarLenAndCenter();
     }
 
     @Test
@@ -103,6 +102,23 @@ public class Mir2ScreenInfoTest {
         System.out.println("realCenterY: " + realCenterY);
     }
 
+    @Test
+    public void testSmallBag() throws IOException {
+        Mir2Screen mir2Screen = Mir2Screen.getInstance();
+        BufferedImage[] smallBagImages = mir2Screen.getSmallBagImages();
+        for (BufferedImage smallBagImage : smallBagImages) {
+            ImageIO.write(smallBagImage, "png", new File(""));
+        }
+    }
+    @Test
+    public void testHPMPBar() throws IOException {
+        Mir2Screen mir2Screen = Mir2Screen.getInstance();
+        BufferedImage hpBar = mir2Screen.getHPBar();
+        BufferedImage mpBar = mir2Screen.getMPBar();
+        ImageIO.write(hpBar, "png", new File(""));
+        ImageIO.write(mpBar, "png", new File(""));
+
+    }
     private static boolean rgbSimilar(int color1Rgb, int color2Rgb){
         int[] ints = colorFromRgb(color1Rgb);
         Color color1 = new Color(ints[0], ints[1], ints[2]);
