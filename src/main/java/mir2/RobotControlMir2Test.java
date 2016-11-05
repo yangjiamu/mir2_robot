@@ -27,12 +27,12 @@ public class RobotControlMir2Test {
 
     public static void randomWalk(){
         int randomDirectionCode = new Random().nextInt(7);
-        WalkDirectionEnum randomDirection = WalkDirectionEnum.fromCode(randomDirectionCode);
+        DirectionEnum randomDirection = DirectionEnum.fromCode(randomDirectionCode);
         prepareMouseForWalk(randomDirection);
 
     }
 
-    public static void prepareMouseForWalk(WalkDirectionEnum directionEnum){
+    public static void prepareMouseForWalk(DirectionEnum directionEnum){
         robot.mouseMove(directionEnum.getCoordination());
     }
 }

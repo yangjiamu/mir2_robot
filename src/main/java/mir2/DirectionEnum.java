@@ -3,7 +3,7 @@ package mir2;
 /**
  * Created by yangwenjie on 16/10/25.
  */
-public enum WalkDirectionEnum {
+public enum DirectionEnum {
     EAST(0, "东"),
     SOUTH(1, "南"),
     WEST(2, "西"),
@@ -16,13 +16,13 @@ public enum WalkDirectionEnum {
     private String desc;
     private Coordinate coordination;
 
-    WalkDirectionEnum(int code, String desc){
+    DirectionEnum(int code, String desc){
         this.code = code;
         this.desc = desc;
     }
 
-    public static WalkDirectionEnum fromCode(int code){
-        for (WalkDirectionEnum v : values()) {
+    public static DirectionEnum fromCode(int code){
+        for (DirectionEnum v : values()) {
             if(v.getCode() == code)
                 return v;
         }

@@ -24,7 +24,9 @@ public class Mir2Screen {
     private static final int MIR2_HP_BAR_LEN = 94;
     private static final int MIR2_MP_BAR_LEN = 94;
     private static final Point MIR2_HP_CICLE_CENTER = new Point(85, 655);
-    private static final Point MIR2_HP_START = new Point(85, 608);
+    private static final Point MIR2_HPMP_CICLE_START = new Point(43, 608);
+    private static final int MIR2_HPMP_CICLE_WIDTH = 92;
+    private static final int MIR2_HPMP_CICLE_HEIGHT = 90;
     private static final int operationScreenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private static final int operationScreenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
@@ -92,13 +94,6 @@ public class Mir2Screen {
 
     }
 
-    public static synchronized Mir2Screen getMir2Screen(){
-        while (!initialized) {
-            instance.init();
-        }
-        return instance;
-    }
-
     public BufferedImage getGameScreen(){
         return robot.captureScreen((int)mir2ScreenLeftTop.getX(), (int)mir2ScreenLeftTop.getY(), MIR2_SCREEN_WIDTH,MIR2_SCREEN_HEIGHT);
     }
@@ -128,12 +123,27 @@ public class Mir2Screen {
     }
 
     public BufferedImage getHPBar(){
-        return getGameScreen().getSubimage((int)MIR2_HP_START.getX() - 5, (int)(MIR2_HP_START.getY()),
+        return getGameScreen().getSubimage((int) MIR2_HPMP_CICLE_START.getX() - 5, (int)(MIR2_HPMP_CICLE_START.getY()),
                 1, MIR2_HP_BAR_LEN);
     }
     public BufferedImage getMPBar(){
-        return getGameScreen().getSubimage((int)MIR2_HP_START.getX() + 5, (int)(MIR2_HP_START.getY()),
+        return getGameScreen().getSubimage((int) MIR2_HPMP_CICLE_START.getX() + 5, (int)(MIR2_HPMP_CICLE_START.getY()),
                 1, MIR2_HP_BAR_LEN);
+    }
+
+    public BufferedImage getHPMPCicle(){
+        return getGameScreen().getSubimage((int)MIR2_HPMP_CICLE_START.getX(), (int)MIR2_HPMP_CICLE_START.getY(),
+                MIR2_HPMP_CICLE_WIDTH, MIR2_HPMP_CICLE_HEIGHT);
+    }
+
+    public BufferedImage getHPCicle(){
+        BufferedImage hpmpCicle = getHPMPCicle();
+        return hpmpCicle.getSubimage(0, 0, hpmpCicle.getWidth()/2, hpmpCicle.getHeight());
+    }
+
+    public BufferedImage getMPCicle(){
+        BufferedImage hpmpCicle = getHPMPCicle();
+        return hpmpCicle.getSubimage(0, hpmpCicle.getWidth()/2, hpmpCicle.getWidth()/2, hpmpCicle.getHeight());
     }
 
     public static int getHPBarLen(){
@@ -152,6 +162,9 @@ public class Mir2Screen {
     }
 
     public static Mir2Screen getInstance() {
+        while (!initialized){
+            instance.init();
+        }
         return instance;
     }
 
