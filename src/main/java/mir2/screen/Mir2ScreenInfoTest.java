@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -38,5 +39,96 @@ public class Mir2ScreenInfoTest {
     public void testHPMP(){
         Mir2Screen mir2Screen = Mir2Screen.getMir2Screen();
         mir2Screen.locateHpBarLenAndCenter();
+    }
+
+    @Test
+    public void locateHpBarLenAndCenter() throws IOException {
+        BufferedImage image = ImageIO.read(new File("C:\\Users\\yang\\Pictures\\game_window_test_hpbar.png"));
+        Color color = new Color(255, 254, 54);
+        Color color1 = new Color(163, 152, 79);
+        int upMax = 0;
+        int upMax1 = 0;
+        int downMax = 0;
+        int downMax1 = 0;
+        int maxLen = 0;
+        int maxLen1 = 0;
+        int realCenterX = 0;
+
+        int centerY = (int)(Mir2Screen.getMir2HpCicleCenter().getY());
+        for (int x = (int)(Mir2Screen.getMir2HpCicleCenter().getX() - 20); x < (int)(Mir2Screen.getMir2HpCicleCenter().getX() + 20); x++) {
+            int upCur = 0;
+            int upCur1 = 0;
+            int downCur = 0;
+            int downCur1 =0;
+
+            int lenCur = 0;
+            int lenCur1 = 0;
+            //up
+            int y = centerY;
+            while (image.getRGB(x, y) != color1.getRGB()){
+                --y;
+            }
+            ++y;
+            upCur1 = centerY - y + 1;
+            if(upMax1 < upCur1){
+                upMax1 = upCur1;
+            }
+            y = centerY;
+            while (image.getRGB(x, y) != color.getRGB()){
+                --y;
+            }
+            ++y;
+            upCur = centerY -y + 1;
+            if(upMax < upCur){
+                upMax = upCur;
+            }
+            //down
+            y = centerY;
+            while (image.getRGB(x, y) != color1.getRGB()){
+                ++y;
+            }
+            --y;
+            downCur1 = y - centerY + 1;
+            if(downMax1 < downCur1){
+                downMax1 = downCur1;
+            }
+            y = centerY;
+            while (image.getRGB(x, y) != color.getRGB()){
+                ++y;
+            }
+            --y;
+            downCur = y - centerY + 1;
+            if(downMax < downCur){
+                downMax = downCur;
+            }
+            lenCur1 = upCur1 + downCur1;
+            lenCur = upCur + downCur;
+            if(maxLen < lenCur) {
+                realCenterX = x;
+                maxLen = lenCur;
+            }
+            if(maxLen1 < lenCur1) {
+                realCenterX = x;
+                maxLen1 = lenCur1;
+            }
+            System.out.println("up1: " + upCur1 + "     down1: " + downCur1 + "     len1: " + lenCur1);
+            System.out.println("up:  " + upCur + "   down: " + downCur + "      len: " + lenCur);
+            System.out.println("----------------------------------------------------------------------");
+        }
+        System.out.println("**********************************************************************");
+        int y = centerY;
+        while (image.getRGB(realCenterX, y) != color1.getRGB())--y;
+        ++y;
+        int upYMark = y;
+        y = centerY;
+        while (image.getRGB(realCenterX, y) != color1.getRGB())++y;
+        --y;
+        int downYMark = y;
+        int realCenterY = upYMark + (downYMark - upYMark)/2;
+        System.out.println("maxLen: " + maxLen + "      maxLen1: " + maxLen1);
+        System.out.println("oldX: " + Mir2Screen.getMir2HpCicleCenter().getX());
+        System.out.println("oldY: " + Mir2Screen.getMir2HpCicleCenter().getY());
+        System.out.println("realCenterX: " + realCenterX);
+        System.out.println("realCenterY: " + realCenterY);
     }
 }

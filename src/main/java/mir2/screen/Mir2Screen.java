@@ -35,6 +35,39 @@ public class Mir2Screen {
     private Point mir2TitleBarRightBottom;
     private Point mir2ScreenLeftTop;
     private Point mir2ScreenRightBottom;
+
+    public static Point getMir2RoleRelativeCenter() {
+        return MIR2_ROLE_RELATIVE_CENTER;
+    }
+
+    public static Point getMir2CoordinationRelativeLeftTop() {
+        return MIR2_COORDINATION_RELATIVE_LEFT_TOP;
+    }
+
+    public static Point getMir2CoordinationRelativeRightBottom() {
+        return MIR2_COORDINATION_RELATIVE_RIGHT_BOTTOM;
+    }
+
+    public static int getMir2SmallBagWidth() {
+        return MIR2_SMALL_BAG_WIDTH;
+    }
+
+    public static Point[] getMir2SmallBagRelativePositon() {
+        return MIR2_SMALL_BAG_RELATIVE_POSITON;
+    }
+
+    public static int getMir2HpBarLen() {
+        return MIR2_HP_BAR_LEN;
+    }
+
+    public static int getMir2MpBarLen() {
+        return MIR2_MP_BAR_LEN;
+    }
+
+    public static Point getMir2HpCicleCenter() {
+        return MIR2_HP_CICLE_CENTER;
+    }
+
     private Point smallBagLeftTop;
     private Point smallBagRightBottom;
     private Mir2Screen() {
