@@ -33,4 +33,10 @@ public class Mir2ScreenInfoTest {
         image = mir2Screen.getTitleBarScreen();
         ImageIO.write(image, "png", new File("C:\\Users\\yang\\Pictures\\game_titlebar.png"));
     }
+
+    @Test
+    public void testHPMP(){
+        Mir2Screen mir2Screen = Mir2Screen.getMir2Screen();
+        mir2Screen.locateHpBarLenAndCenter();
+    }
 }
