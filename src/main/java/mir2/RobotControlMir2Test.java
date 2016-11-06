@@ -33,6 +33,5 @@ public class RobotControlMir2Test {
     }
 
     public static void prepareMouseForWalk(DirectionEnum directionEnum){
-        robot.mouseMove(directionEnum.getCoordination());
     }
 }

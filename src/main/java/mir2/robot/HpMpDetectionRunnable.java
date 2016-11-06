@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by yang on 2016/11/5.
  */
-public class HpMpDetectRunnable implements Runnable{
+public class HpMpDetectionRunnable implements Runnable{
     private  final String hpHalfPath = this.getClass().getResource("/hp_half_cicle_full_24.png").getPath();
     private  final String mpHalfPath = this.getClass().getResource("/hp_half_cicle_full_24.png").getPath();
     private  final String hpFullPath = this.getClass().getResource("/hp_full_cicle_full_24.png").getPath();

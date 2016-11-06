@@ -2,7 +2,9 @@ package mir2.role;
 
 import mir2.DirectionEnum;
 import mir2.robot.Robot2;
+import mir2.robot.RoleCurrentStatusEnum;
 import mir2.screen.Mir2Screen;
+import org.junit.Test;
 
 import java.awt.*;
 
@@ -18,13 +20,16 @@ public class GameRole {
     private Integer maxHp;
     private Integer mp;
     private Integer maxMp;
+    private Point currentCoordination;
+    private RoleCurrentStatusEnum currentStatus;
+    private int currentMapNo;
     private Mir2Screen mir2Screen = Mir2Screen.getInstance();
 
 
     public static GameRole getInstance(){
         return instance;
     }
-    private GameRole() {
+    public GameRole() {
         career = "战士";
         level = 24;
         maxHp = 295;
@@ -34,15 +39,22 @@ public class GameRole {
     }
 
     public boolean walkTo(Point destination){
+        //a new Thread to do that???
         return true;
     }
 
-    public boolean walkOneStep(DirectionEnum direction){
+    public boolean walkToMap(int mapNo){
         return true;
     }
 
-    public boolean faceTo(DirectionEnum direction){
-        return true;
+    public void walkOneStep(DirectionEnum direction){
+        //safety check
+        robot.clickMouseLeftButton(direction.getTurnAroundMousePoint());
+        robot.delay(1000);
+    }
+
+    public void faceTo(DirectionEnum direction){
+        robot.clickMouseLeftButton(direction.getTurnAroundMousePoint());
     }
 
     //getter setter
@@ -92,5 +104,18 @@ public class GameRole {
 
     public void setCareer(String career) {
         this.career = career;
+    }
+
+    @Test
+    public void testWalk(){
+        GameRole gameRole = GameRole.getInstance();
+        gameRole.walkOneStep(DirectionEnum.EAST);
+        gameRole.walkOneStep(DirectionEnum.WEST);
+        gameRole.walkOneStep(DirectionEnum.NORTH);
+        gameRole.walkOneStep(DirectionEnum.SOUTH);
+        gameRole.walkOneStep(DirectionEnum.NORTH_EAST);
+        gameRole.walkOneStep(DirectionEnum.NORTH_WEST);
+        gameRole.walkOneStep(DirectionEnum.SOUTH_EAST);
+        gameRole.walkOneStep(DirectionEnum.SOUTH_WEST);
     }
 }

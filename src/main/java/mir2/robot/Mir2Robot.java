@@ -13,7 +13,7 @@ public class Mir2Robot {
     }
 
     public static void start() {
-        new Thread(new HpMpDetectRunnable()).start();//实时监控HP MP
+        new Thread(new HpMpDetectionRunnable()).start();//实时监控HP MP
         while (true){
             System.out.println("hp: " + role.getHp() + "    mp: " + role.getMp());
             try {

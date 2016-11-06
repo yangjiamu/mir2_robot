@@ -1,14 +1,11 @@
 package mir2.map;
 
 import mir2.util.Misc;
-import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.Hashtable;
-import java.util.Iterator;
 
 /**
  * 地图工具类<br>TODO 处理门 
@@ -16,7 +13,6 @@ import java.util.Iterator;
 public class MapHolder {
 
 	/** log */
-	private static Logger log = Logger.getLogger(MapHolder.class);
 	/**
 	 * 地图磁块宽
 	 * <br>

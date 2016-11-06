@@ -15,59 +15,47 @@ public class Mir2Screen {
     private static final int MAX_TITLE_LENGTH = 20;
     private static final int MIR2_SCREEN_WIDTH = 1024;
     private static final int MIR2_SCREEN_HEIGHT = 768;
-    private static final Point MIR2_ROLE_RELATIVE_CENTER = new Point(502, 297);
-    private static final Point MIR2_COORDINATION_RELATIVE_LEFT_TOP = new Point(55, 750);
-    private static final Point MIR2_COORDINATION_RELATIVE_RIGHT_BOTTOM = new Point(100, 765);
+    private static final int operationScreenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    private static final int operationScreenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    //relative attribute
+    private static final Point MIR2_ROLE_RELATIVE_STAND_CENTER = new Point(504, 327);
+    private static final Point MIR2_WEST_RUN_RELATIVE = new Point(300, 327);
+    private static final Point MIR2_EAST_RUN_RELATIVE = new Point(720, 327);
+    private static final Point MIR2_NORTH_RUN_RELATIVE = new Point(505, 200);
+    private static final Point MIR2_SOUTH_RUN_RELATIVE = new Point(505, 420);
+    private static final Point MIR2_NORTH_WEST_RUN_RELATIVE = new Point(300, 200);
+    private static final Point MIR2_NORTH_EAST_RUN_RELATIVE = new Point(720, 200);
+    private static final Point MIR2_SOUTH_WEST_RUN_RELATIVE = new Point(300, 420);
+    private static final Point MIR2_SOUTH_EAST_RUN_RELATIVE = new Point(720, 420);
     private static final int MIR2_SMALL_BAG_WIDTH = 30;
     private static final Point[] MIR2_SMALL_BAG_RELATIVE_POSITON = {new Point(400, 575), new Point(444, 575), new Point(488, 575),
             new Point(532, 575), new Point(576, 575), new Point(620, 575)};
-    private static final int MIR2_HP_BAR_LEN = 94;
-    private static final int MIR2_MP_BAR_LEN = 94;
-    private static final Point MIR2_HP_CICLE_CENTER = new Point(85, 655);
     private static final Point MIR2_HPMP_CICLE_START = new Point(43, 608);
     private static final int MIR2_HPMP_CICLE_WIDTH = 92;
     private static final int MIR2_HPMP_CICLE_HEIGHT = 90;
-    private static final int operationScreenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    private static final int operationScreenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    private static final Point MIR2_COORDINATION_AREA_RELATIVE_START = new Point(13, 749);
+    private static final int MIR2_COORDINATION_AREA_WIDTH = 156;
+    private static final int MIR2_COORDINATION_AREA_HEIGHT = 17;
+    private static final int MIR2_CHI_SIM_PIXEL_WIDTH = 14;
+
 
     private static Mir2Screen instance = new Mir2Screen();
-    private static boolean initialized = false;
+    private static volatile boolean initialized = false;
 
     private Point mir2TitleBarLeftTop;
     private Point mir2TitleBarRightBottom;
     private Point mir2ScreenLeftTop;
     private Point mir2ScreenRightBottom;
 
-    public static Point getMir2RoleRelativeCenter() {
-        return MIR2_ROLE_RELATIVE_CENTER;
+    public static Point getMir2RoleRelativeStandCenter() {
+        return MIR2_ROLE_RELATIVE_STAND_CENTER;
     }
-
-    public static Point getMir2CoordinationRelativeLeftTop() {
-        return MIR2_COORDINATION_RELATIVE_LEFT_TOP;
-    }
-
-    public static Point getMir2CoordinationRelativeRightBottom() {
-        return MIR2_COORDINATION_RELATIVE_RIGHT_BOTTOM;
-    }
-
     public static int getMir2SmallBagWidth() {
         return MIR2_SMALL_BAG_WIDTH;
     }
 
     public static Point[] getMir2SmallBagRelativePositon() {
         return MIR2_SMALL_BAG_RELATIVE_POSITON;
-    }
-
-    public static int getMir2HpBarLen() {
-        return MIR2_HP_BAR_LEN;
-    }
-
-    public static int getMir2MpBarLen() {
-        return MIR2_MP_BAR_LEN;
-    }
-
-    public static Point getMir2HpCicleCenter() {
-        return MIR2_HP_CICLE_CENTER;
     }
 
     private Point smallBagLeftTop;
@@ -105,12 +93,6 @@ public class Mir2Screen {
                 (int)(mir2TitleBarRightBottom.getY() - mir2TitleBarLeftTop.getY()));
     }
 
-    public BufferedImage getCoordinationImage(){
-        return getGameScreen().getSubimage((int)MIR2_COORDINATION_RELATIVE_LEFT_TOP.getX(),
-                (int)MIR2_COORDINATION_RELATIVE_LEFT_TOP.getY(),
-                (int)(MIR2_COORDINATION_RELATIVE_RIGHT_BOTTOM.getX() - MIR2_COORDINATION_RELATIVE_LEFT_TOP.getX()),
-                (int)(MIR2_COORDINATION_RELATIVE_RIGHT_BOTTOM.getY() - MIR2_COORDINATION_RELATIVE_LEFT_TOP.getY()));
-    }
 
     public BufferedImage[] getSmallBagImages(){
         BufferedImage[] smallBags = new BufferedImage[6];
@@ -120,15 +102,6 @@ public class Mir2Screen {
                 MIR2_SMALL_BAG_WIDTH, MIR2_SMALL_BAG_WIDTH);
         }
         return smallBags;
-    }
-
-    public BufferedImage getHPBar(){
-        return getGameScreen().getSubimage((int) MIR2_HPMP_CICLE_START.getX() - 5, (int)(MIR2_HPMP_CICLE_START.getY()),
-                1, MIR2_HP_BAR_LEN);
-    }
-    public BufferedImage getMPBar(){
-        return getGameScreen().getSubimage((int) MIR2_HPMP_CICLE_START.getX() + 5, (int)(MIR2_HPMP_CICLE_START.getY()),
-                1, MIR2_HP_BAR_LEN);
     }
 
     public BufferedImage getHPMPCicle(){
@@ -146,13 +119,91 @@ public class Mir2Screen {
         return hpmpCicle.getSubimage(0, hpmpCicle.getWidth()/2, hpmpCicle.getWidth()/2, hpmpCicle.getHeight());
     }
 
-    public static int getHPBarLen(){
-        return MIR2_HP_BAR_LEN;
-    }
-    public static int getMPBarLen(){
-        return MIR2_MP_BAR_LEN;
+    public BufferedImage getNavigationArea(){
+        return getGameScreen().getSubimage((int)MIR2_COORDINATION_AREA_RELATIVE_START.getX(),
+                (int)MIR2_COORDINATION_AREA_RELATIVE_START.getY(),
+                MIR2_COORDINATION_AREA_WIDTH, MIR2_COORDINATION_AREA_HEIGHT);
     }
 
+    public BufferedImage getMapNameArea(String mapName){
+        BufferedImage mapAndCoordinationArea = getNavigationArea();
+        return mapAndCoordinationArea.getSubimage(0, 0, mapName.length()*MIR2_CHI_SIM_PIXEL_WIDTH,
+                mapAndCoordinationArea.getHeight());
+    }
+
+    public BufferedImage getCoordinationArea(String mapName){
+        BufferedImage mapAndCoordinationArea = getNavigationArea();
+        return mapAndCoordinationArea.getSubimage(mapName.length()*MIR2_CHI_SIM_PIXEL_WIDTH, 0,
+                mapAndCoordinationArea.getWidth() - mapName.length()*MIR2_CHI_SIM_PIXEL_WIDTH,
+                mapAndCoordinationArea.getHeight());
+    }
+
+    public Point getAbsoluteStandPoint(){
+        return addPoint(mir2ScreenLeftTop, MIR2_ROLE_RELATIVE_STAND_CENTER);
+    }
+
+    public Point getAbsoluteWestRunMousePoint(){
+        return addPoint(mir2ScreenLeftTop, MIR2_WEST_RUN_RELATIVE);
+    }
+
+    public Point getAbsoluteEastRunMousePoint(){
+        return addPoint(mir2ScreenLeftTop, MIR2_EAST_RUN_RELATIVE);
+    }
+
+    public Point getAbsoluteNorthRunMousePoint(){
+        return addPoint(mir2ScreenLeftTop, MIR2_NORTH_RUN_RELATIVE);
+    }
+
+    public Point getAbsoluteSouthRunMousePoint(){
+        return addPoint(mir2ScreenLeftTop, MIR2_SOUTH_RUN_RELATIVE);
+    }
+
+    public Point getAbsoluteNorthWestRunMousePoint(){
+        return addPoint(mir2ScreenLeftTop, MIR2_NORTH_WEST_RUN_RELATIVE);
+    }
+
+    public Point getAbsoluteNorthEastRunMousePoint(){
+        return addPoint(mir2ScreenLeftTop, MIR2_NORTH_EAST_RUN_RELATIVE);
+    }
+
+    public Point getAbsoluteSouthWestRunMousePoint(){
+        return addPoint(mir2ScreenLeftTop, MIR2_SOUTH_WEST_RUN_RELATIVE);
+    }
+
+    public Point getAbsoluteSouthEastRunMousePoint(){
+        return addPoint(mir2ScreenLeftTop, MIR2_SOUTH_EAST_RUN_RELATIVE);
+    }
+
+    public Point getAbsoluteNorthTurnMousePoint(){
+        return addPoint(getAbsoluteStandPoint(), new Point(0, -50));
+    }
+
+    public Point getAbsoluteSouthTurnMousePoint(){
+        return addPoint(getAbsoluteStandPoint(), new Point(0, 50));
+    }
+
+    public Point getAbsoluteWestTurnMousePoint(){
+        return addPoint(getAbsoluteStandPoint(), new Point(-50, 0));
+    }
+
+    public Point getAbsoluteEastTurnMousePoint(){
+        return addPoint(getAbsoluteStandPoint(), new Point(50, 0));
+    }
+
+    public Point getAbsoluteNorthWestTurnMousePoint(){
+        return addPoint(getAbsoluteStandPoint(), new Point(-50, -50));
+    }
+    public Point getAbsoluteNorthEastTurnMousePoint(){
+        return addPoint(getAbsoluteStandPoint(), new Point(50, -50));
+    }
+
+    public Point getAbsoluteSouthWestTurnMousePoint(){
+        return addPoint(getAbsoluteStandPoint(), new Point(-50, 50));
+    }
+
+    public Point getAbsoluteSouthEastTurnMousePoint(){
+        return addPoint(getAbsoluteStandPoint(), new Point(50, 50));
+    }
     public static int getMir2ScreenWidth() {
         return MIR2_SCREEN_WIDTH;
     }
@@ -214,5 +265,9 @@ public class Mir2Screen {
 
     public void setMir2ScreenRightBottom(Point mir2ScreenRightBottom) {
         this.mir2ScreenRightBottom = mir2ScreenRightBottom;
+    }
+
+    private Point addPoint(Point point1, Point point2){
+        return new Point((int)(point1.getX() + point2.getX()), (int)(point1.getY() + point2.getY()));
     }
 }

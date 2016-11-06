@@ -32,78 +32,14 @@ public class Mir2ScreenInfoTest {
     @Test
     public void testCaptureGameWindow() throws InterruptedException, IOException {
         Mir2Screen mir2Screen = Mir2Screen.getInstance();
-        for(int i=0; i<10; ++i) {
-            BufferedImage image = mir2Screen.getGameScreen();
-            ImageIO.write(image, "png", new File("C:\\Users\\yang\\Pictures\\game_window_" + i + ".png"));
-            Thread.sleep(1000 * 2);
-        }
+        BufferedImage image = mir2Screen.getGameScreen();
+        ImageIO.write(image, "png", new File("C:\\Users\\yang\\Pictures\\game_window_for_stand_point_locate.png"));
+        Thread.sleep(1000 * 2);
     }
 
     @Test
     public void testHPMP(){
         Mir2Screen mir2Screen = Mir2Screen.getInstance();
-    }
-
-    @Test
-    public void locateHpBarLenAndCenter() throws IOException {
-        BufferedImage image = ImageIO.read(new File("C:\\Users\\yang\\Pictures\\game_window_test_hpbar.png"));
-        Color colorUp = new Color(227, 215, 47);
-        Color colorDown = new Color(254, 240, 53);
-        //Color color1 = new Color(163, 152, 79);
-        int upMax = 0;
-        int downMax = 0;
-        int maxLen = 0;
-        int realCenterX = 0;
-
-        int centerY = (int)(Mir2Screen.getMir2HpCicleCenter().getY());
-        for (int x = (int)(Mir2Screen.getMir2HpCicleCenter().getX() - 20); x < (int)(Mir2Screen.getMir2HpCicleCenter().getX() + 20); x++) {
-            System.out.println("x:" + x);
-            int upCur = 0;
-            int downCur = 0;
-            int lenCur = 0;
-            //up
-            int y = centerY;
-            while (!rgbSimilar(image.getRGB(x, y), colorUp.getRGB())){
-                --y;
-            }
-            ++y;
-            upCur = centerY -y + 1;
-            if(upMax < upCur){
-                upMax = upCur;
-            }
-            //down
-            y = centerY;
-            while (!rgbSimilar(image.getRGB(x, y), colorDown.getRGB())){
-                ++y;
-            }
-            --y;
-            downCur = y - centerY + 1;
-            if(downMax < downCur){
-                downMax = downCur;
-            }
-            lenCur = upCur + downCur;
-            if(maxLen < lenCur) {
-                realCenterX = x;
-                maxLen = lenCur;
-            }
-            System.out.println("up:  " + upCur + "   down: " + downCur + "      len: " + lenCur);
-            System.out.println("----------------------------------------------------------------------");
-        }
-        System.out.println("**********************************************************************");
-        int y = centerY;
-        while (!rgbSimilar(image.getRGB(realCenterX, y), colorUp.getRGB()))--y;
-        ++y;
-        int upYMark = y;
-        y = centerY;
-        while (!rgbSimilar(image.getRGB(realCenterX, y), colorUp.getRGB()))++y;
-        --y;
-        int downYMark = y;
-        int realCenterY = upYMark + (downYMark - upYMark)/2;
-        System.out.println("maxLen: " + maxLen);
-        System.out.println("oldX: " + Mir2Screen.getMir2HpCicleCenter().getX());
-        System.out.println("oldY: " + Mir2Screen.getMir2HpCicleCenter().getY());
-        System.out.println("realCenterX: " + realCenterX);
-        System.out.println("realCenterY: " + realCenterY);
     }
 
     @Test
@@ -202,17 +138,6 @@ public class Mir2ScreenInfoTest {
             i++;
         }
     }
-    @Test
-    public void testHPMPBar() throws IOException, InterruptedException {
-        Mir2Screen mir2Screen = Mir2Screen.getInstance();
-        for (int i = 0; i < 100; i++) {
-            BufferedImage hpBar = mir2Screen.getHPBar();
-            BufferedImage mpBar = mir2Screen.getMPBar();
-            ImageIO.write(hpBar, "png", new File("C:\\Users\\yang\\Pictures\\hp\\hpbar" + i + ".png"));
-            ImageIO.write(mpBar, "png", new File("C:\\Users\\yang\\Pictures\\hp\\mpbar" + i+ ".png"));
-            Thread.sleep(1000*1);
-        }
-    }
     private static boolean rgbSimilar(int color1Rgb, int color2Rgb){
         int[] ints = colorFromRgb(color1Rgb);
         Color color1 = new Color(ints[0], ints[1], ints[2]);
@@ -236,5 +161,10 @@ public class Mir2ScreenInfoTest {
         Color colorUp = new Color(227, 215, 47);
         Color colorDown = new Color(254, 240, 53);
         System.out.println(rgbSimilar(colorUp.getRGB(), colorDown.getRGB()));
+    }
+
+    @Test
+    public void getStandPointCapture() throws IOException {
+
     }
 }

@@ -1,7 +1,6 @@
 package mir2.util;
 
 import mir2.map.MapTileInfo;
-import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -16,8 +15,7 @@ import java.nio.ByteOrder;
 /** 一些不好归类的方法 */
 public class Misc {
 	/** log */
-	private static final Logger log = Logger.getLogger(Misc.class);
-	
+
 	/**
 	 * 读取适合lwjgl窗口使用的图标
 	 * 

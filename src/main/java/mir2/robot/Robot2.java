@@ -41,6 +41,10 @@ public class Robot2 {
         robot.mouseMove(x, y);
     }
 
+    public void mouseMove(Point point){
+        robot.mouseMove((int)point.getX(), (int)point.getY());
+    }
+
     public void mouseMove(Coordinate coordinate){
         robot.mouseMove(coordinate.getX(), coordinate.getY());
     }
@@ -77,8 +81,8 @@ public class Robot2 {
         releaseMouseLeftButton();
     }
 
-    public void clickMouseLeftButton(Coordinate coordinate){
-        mouseMove(coordinate);
+    public void clickMouseLeftButton(Point point){
+        mouseMove(point);
         clickMouseLeftButton();
     }
 
@@ -88,8 +92,8 @@ public class Robot2 {
         releaseMouseRightButton();
     }
 
-    public void clickMouseRightButton(Coordinate coordinate){
-        mouseMove(coordinate);
+    public void clickMouseRightButton(Point point){
+        mouseMove(point);
         clickMouseRightButton();
     }
 
