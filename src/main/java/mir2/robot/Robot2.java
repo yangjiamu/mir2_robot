@@ -1,7 +1,5 @@
 package mir2.robot;
 
-import mir2.Coordinate;
-
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -45,18 +43,10 @@ public class Robot2 {
         robot.mouseMove((int)point.getX(), (int)point.getY());
     }
 
-    public void mouseMove(Coordinate coordinate){
-        robot.mouseMove(coordinate.getX(), coordinate.getY());
-    }
-
     public void pressMouseLeftButton(){
         robot.mousePress(InputEvent.BUTTON1_MASK);
     }
 
-    public void pressMouseLeftButton(Coordinate coordinate){
-        mouseMove(coordinate);
-        pressMouseLeftButton();
-    }
 
     public void releaseMouseLeftButton(){
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
@@ -64,11 +54,6 @@ public class Robot2 {
 
     public void pressMouseRightButton(){
         robot.mousePress(InputEvent.BUTTON3_MASK);
-    }
-
-    public void pressMouseRightButton(Coordinate coordinate){
-        mouseMove(coordinate);
-        pressMouseRightButton();
     }
 
     public void releaseMouseRightButton(){

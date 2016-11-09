@@ -1,7 +1,6 @@
 package mir2.util;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Created by yang on 2016/11/5.
@@ -23,16 +22,6 @@ public class ColorUtil {
         color[1] = (rgbVale & 0x0000ff00) >> 8;
         color[2] = rgbVale & 0x000000ff;
         return color;
-    }
-
-    public static void changeBackgroundToBlack(BufferedImage image){
-        for (int i = 0; i < image.getWidth(); i++) {
-            for (int i1 = 0; i1 < image.getHeight(); i1++) {
-                if (!isWhiteColor(image.getRGB(i, i1))){
-                    image.setRGB(i, i1, new Color(0, 0, 0).getRGB());
-                }
-            }
-        }
     }
 
     public static boolean isColorEqual(Color color1, Color color2){

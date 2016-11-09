@@ -13,7 +13,7 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
  */
 public class MirMapCordTest {
     public static void main(String[] args) throws IOException {
-        Map map = MapHolder.readMapFromFile("0");
+        Map map = new MapHolder().readMapFromFile(0);
         System.out.println("height: " + map.getHeight());
         System.out.println("width: " + map.getWidth());
 

@@ -1,6 +1,4 @@
 package mir2.crawl;
-
-import org.htmlparser.util.ParserException;
 import org.junit.Test;
 
 import java.io.*;
@@ -21,7 +19,7 @@ public class CrawlMonsterInfo {
     public static final String MONSTERINFO_WIN = ROOT_DIR_WIN + "/monsterinfo";
     public static final String MONSTERINFO_MAC = ROOT_DIR_MAC + "/monsterinfo";
 
-    public static void main(String[] args) throws IOException, URISyntaxException, ParserException, InterruptedException {
+    public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
         String homePageContent = crawler.getContent(Crawler.HOME_URL);
 
         Map<String, String> mapMonsterUrl = getMapMonsterUrl(homePageContent);//mapname->url the url page contain the monster occured in map
@@ -131,7 +129,7 @@ public class CrawlMonsterInfo {
         return map;
     }
 
-    public static Monster getMonsterInfo(String monsterUrl) throws IOException, URISyntaxException, ParserException {
+    public static Monster getMonsterInfo(String monsterUrl) throws IOException, URISyntaxException {
         List<DropObject> dropObjects = new ArrayList<>();
         String htmlContent = crawler.getContent(monsterUrl);
 

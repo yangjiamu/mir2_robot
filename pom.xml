@@ -22,17 +22,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-        </dependency>
-        <!--<dependency>
-            <groupId>nu.pattern</groupId>
-            <artifactId>opencv</artifactId>
-            <version>2.4.9-7</version>
-        </dependency>-->
-
-        <dependency>
             <groupId>net.sourceforge.tess4j</groupId>
             <artifactId>tess4j</artifactId>
             <version>3.2.1</version>
@@ -48,31 +37,48 @@
             <version>4.5.2</version>
         </dependency>
         <dependency>
-            <groupId>org.htmlparser</groupId>
-            <artifactId>htmlparser</artifactId>
-            <version>2.1</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.sun.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>3.0.9</version>
-        </dependency>-->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <version>4.2.2</version>
         </dependency>
         <dependency>
-            <groupId>com.vnetpublishing.java</groupId>
-            <artifactId>super-user-application</artifactId>
-            <version>0.0.5</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
+        <!--log-->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.2</version>
         </dependency>
     </dependencies>
-
+    <exclusions>
+        <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.7</version>
+        </exclusion>
+        <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>core</artifactId>
+            <version>1.1.7</version>
+        </exclusion>
+    </exclusions>
 
 </project>

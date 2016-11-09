@@ -1,25 +1,48 @@
-package mir2.map;
+package mir2.navigation;
 
 /**
  * Created by yangwenjie on 16/10/28.
  */
+import lombok.Getter;
+import lombok.Setter;
+import mir2.map.MapTileInfo;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
+@Getter
+@Setter
 public class AStar {
     public static final int STEP = 10;
 
-    private boolean[][] nodes;//nodes[i][j]=true if there is an obstacle
-    private ArrayList<Node> openList = new ArrayList<Node>();
-    private ArrayList<Node> closeList = new ArrayList<Node>();
-
-    public AStar(boolean [][] nodes){
-        this.nodes = nodes;
-        System.out.println(nodes.length + ":" + nodes[0].length);
+    public MapTileInfo[][] getTiles() {
+        return tiles;
     }
-    public Node findMinFNodeInOpenList() {
-        Node tempNode = openList.get(0);
-        for (Node node : openList) {
+
+    public void setTiles(MapTileInfo[][] tiles) {
+        this.tiles = tiles;
+    }
+
+    //private boolean[][] nodes;//nodes[i][j]=true if there is an obstacle
+    private MapTileInfo[][] tiles;
+    private ArrayList<AStarNode> openList = new ArrayList<>();
+    private ArrayList<AStarNode> closeList = new ArrayList<>();
+
+    public AStar(){
+
+    }
+
+    public AStar(MapTileInfo [][] tiles){
+
+    }
+    /*public AStar(boolean [][] nodes){
+        this.nodes = nodes;
+    }*/
+
+    public AStarNode findMinFNodeInOpenList() {
+        AStarNode tempNode = openList.get(0);
+        for (AStarNode node : openList) {
             if (node.F < tempNode.F) {
                 tempNode = node;
             }
@@ -27,82 +50,81 @@ public class AStar {
         return tempNode;
     }
 
-    public ArrayList<Node> findNeighborNodes(Node currentNode) {
-        ArrayList<Node> arrayList = new ArrayList<Node>();
+    public ArrayList<AStarNode> findNeighborNodes(AStarNode currentNode) {
+        ArrayList<AStarNode> arrayList = new ArrayList<>();
         int x, y;
         //top
         x = currentNode.x;
         y = currentNode.y - 1;
         if (canReach(x, y) && !exists(closeList, x, y)) {
-            arrayList.add(new Node(x, y));
+            arrayList.add(new AStarNode(x, y));
         }
         //bottom
         x = currentNode.x;
         y = currentNode.y + 1;
         if (canReach(x, y) && !exists(closeList, x, y)) {
-            arrayList.add(new Node(x, y));
+            arrayList.add(new AStarNode(x, y));
         }
         //left
         x = currentNode.x - 1;
         y = currentNode.y;
         if (canReach(x, y) && !exists(closeList, x, y)) {
-            arrayList.add(new Node(x, y));
+            arrayList.add(new AStarNode(x, y));
         }
         //right
         x = currentNode.x + 1;
         y = currentNode.y;
         if (canReach(x, y) && !exists(closeList, x, y)) {
-            arrayList.add(new Node(x, y));
+            arrayList.add(new AStarNode(x, y));
         }
         //top left
         x = currentNode.x - 1;
         y = currentNode.y - 1;
         if (canReach(x, y) && !exists(closeList, x, y)) {
-            arrayList.add(new Node(x, y));
+            arrayList.add(new AStarNode(x, y));
         }
         //top right
         x = currentNode.x - 1;
         y = currentNode.y + 1;
         if (canReach(x, y) && !exists(closeList, x, y)) {
-            arrayList.add(new Node(x, y));
+            arrayList.add(new AStarNode(x, y));
         }
         //bottom left
         x = currentNode.x + 1;
         y = currentNode.y - 1;
         if (canReach(x, y) && !exists(closeList, x, y)) {
-            arrayList.add(new Node(x, y));
+            arrayList.add(new AStarNode(x, y));
         }
 
         x = currentNode.x + 1;
         y = currentNode.y + 1;
         if (canReach(x, y) && !exists(closeList, x, y)) {
-            arrayList.add(new Node(x, y));
+            arrayList.add(new AStarNode(x, y));
         }
         return arrayList;
     }
 
     public boolean canReach(int x, int y) {
-        if (x >= 0 && x < nodes.length && y >= 0 && y < nodes[0].length) {
-            return nodes[x][y] == false;
+        if (x >= 0 && x < tiles.length && y >= 0 && y < tiles[0].length) {
+            return tiles[x][y].isCanWalk();
         }
         return false;
     }
 
-    public Node findPath(Node startNode, Node endNode) {
-
+    public AStarNode findPath(MapCoordination start, MapCoordination end) {
+        AStarNode startNode = new AStarNode(start.getX(), start.getY());
+        AStarNode endNode = new AStarNode(end.getX(), end.getY());
         // 把起点加入 open list
         openList.add(startNode);
-
         while (openList.size() > 0) {
             // 遍历 open list ，查找 F值最小的节点，把它作为当前要处理的节点
-            Node currentNode = findMinFNodeInOpenList();
+            AStarNode currentNode = findMinFNodeInOpenList();
             // 从open list中移除
             openList.remove(currentNode);
             // 把这个节点移到 close list
             closeList.add(currentNode);
-
-            ArrayList<Node> neighborNodes = findNeighborNodes(currentNode);
-            for (Node node : neighborNodes) {
+            ArrayList<AStarNode> neighborNodes = findNeighborNodes(currentNode);
+            for (AStarNode node : neighborNodes) {
                 if (exists(openList, node)) {
                     foundPoint(currentNode, node);
                 } else {
@@ -113,11 +135,25 @@ public class AStar {
                 return find(openList, endNode);
             }
         }
-
         return find(openList, endNode);
     }
 
-    private void foundPoint(Node tempStart, Node node) {
+    public List<MapCoordination> buildPath(AStarNode node){
+        Stack<AStarNode> stack = new Stack<>();
+        List<MapCoordination> path = new ArrayList<>(stack.size());
+        while (node != null){
+            stack.push(new AStarNode(node.x, node.y));
+            node = node.parent;
+        }
+        stack.pop();//drop the start point
+        while (!stack.isEmpty()){
+            AStarNode top = stack.pop();
+            path.add(new MapCoordination(top.x, top.y));
+        }
+        return path;
+    }
+
+    private void foundPoint(AStarNode tempStart, AStarNode node) {
         int G = calcG(tempStart, node);
         if (G < node.G) {
             node.parent = tempStart;
@@ -126,7 +162,7 @@ public class AStar {
         }
     }
 
-    private void notFoundPoint(Node tempStart, Node end, Node node) {
+    private void notFoundPoint(AStarNode tempStart, AStarNode end, AStarNode node) {
         node.parent = tempStart;
         node.G = calcG(tempStart, node);
         node.H = calcH(end, node);
@@ -134,27 +170,27 @@ public class AStar {
         openList.add(node);
     }
 
-    private int calcG(Node start, Node node) {
+    private int calcG(AStarNode start, AStarNode mapCoordination) {
         int G = STEP;
-        int parentG = node.parent != null ? node.parent.G : 0;
+        int parentG = mapCoordination.parent != null ? mapCoordination.parent.G : 0;
         return G + parentG;
     }
 
-    private int calcH(Node end, Node node) {
-        int step = Math.abs(node.x - end.x) + Math.abs(node.y - end.y);
+    private int calcH(AStarNode end, AStarNode mapCoordination) {
+        int step = Math.abs(mapCoordination.x - end.x) + Math.abs(mapCoordination.y - end.y);
         return step * STEP;
     }
 
-    public static Node find(List<Node> nodes, Node point) {
-        for (Node n : nodes)
+    public static AStarNode find(List<AStarNode> mapCoordinations, AStarNode point) {
+        for (AStarNode n : mapCoordinations)
             if ((n.x == point.x) && (n.y == point.y)) {
                 return n;
             }
         return null;
     }
 
-    public static boolean exists(List<Node> nodes, Node node) {
-        for (Node n : nodes) {
+    public static boolean exists(List<AStarNode> nodes, AStarNode node) {
+        for (AStarNode n : nodes) {
             if ((n.x == node.x) && (n.y == node.y)) {
                 return true;
             }
@@ -162,8 +198,8 @@ public class AStar {
         return false;
     }
 
-    public static boolean exists(List<Node> nodes, int x, int y) {
-        for (Node n : nodes) {
+    public static boolean exists(List<AStarNode> nodes, int x, int y) {
+        for (AStarNode n : nodes) {
             if ((n.x == x) && (n.y == y)) {
                 return true;
             }
@@ -172,7 +208,7 @@ public class AStar {
     }
 
     public static void main(String[] args) {
-        int[][] NODES = {
+        /*int[][] NODES = {
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -195,10 +231,10 @@ public class AStar {
             }
         }
 
-        Node startNode = new Node(5, 1);
-        Node endNode = new Node(5, 5);
+        MapCoordination startNode = new MapCoordination(5, 1);
+        MapCoordination endNode = new MapCoordination(5, 5);
         long mark = System.currentTimeMillis();
-        Node parent = new AStar(BOOLEAN_NODES).findPath(startNode, endNode);
+        MapCoordination parent = new AStar(BOOLEAN_NODES).findPath(startNode, endNode);
         System.out.println(System.currentTimeMillis() - mark);
 
         for (int i = 0; i < NODES.length; i++) {
@@ -207,11 +243,11 @@ public class AStar {
             }
             System.out.println();
         }
-        ArrayList<Node> arrayList = new ArrayList<Node>();
+        ArrayList<MapCoordination> arrayList = new ArrayList<MapCoordination>();
 
         while (parent != null) {
             // System.out.println(parent.x + ", " + parent.y);
-            arrayList.add(new Node(parent.x, parent.y));
+            arrayList.add(new MapCoordination(parent.x, parent.y));
             parent = parent.parent;
         }
         System.out.println("\n");
@@ -226,7 +262,7 @@ public class AStar {
 
             }
             System.out.println();
-        }
+        }*/
 
     }
 

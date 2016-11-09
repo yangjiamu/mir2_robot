@@ -20,7 +20,7 @@ public class HpMpDetectionRunnable implements Runnable{
     @Override
     public void run() {
         Mir2Screen mir2Screen = Mir2Screen.getInstance();
-        GameRole gameRole = GameRole.getInstance();
+        GameRole gameRole = new GameRole();
         BufferedImage hpHalfImage = null;
         BufferedImage mpHalfImage = null;
         BufferedImage hpFullImage = null;
@@ -34,14 +34,14 @@ public class HpMpDetectionRunnable implements Runnable{
         while (true){
             if(gameRole.getLevel() < 7 || (gameRole.getLevel() < 26 && gameRole.getCareer().equals("战士"))){//only have hp
                 BufferedImage curHpImage = mir2Screen.getHPMPCicle();
-                gameRole.setHp((int) (gameRole.getMaxHp() * matchPercentage(curHpImage, hpFullImage)));
+                gameRole.setCurrentHp((int) (gameRole.getHp() * matchPercentage(curHpImage, hpFullImage)));
             }
             else {
                 BufferedImage curHpMpImage = mir2Screen.getHPMPCicle();
                 BufferedImage curHpImage = curHpMpImage.getSubimage(0, 0, curHpMpImage.getWidth() / 2, curHpMpImage.getHeight());
                 BufferedImage curMpImage = curHpMpImage.getSubimage(0, curHpMpImage.getWidth() / 2, curHpMpImage.getWidth() / 2, curHpMpImage.getHeight());
-                gameRole.setHp((int) (gameRole.getMaxHp() * matchPercentage(curHpImage, hpHalfImage)));
-                gameRole.setMp((int) (gameRole.getMaxMp() * matchPercentage(curMpImage, mpHalfImage)));
+                gameRole.setCurrentHp((int) (gameRole.getHp() * matchPercentage(curHpImage, hpHalfImage)));
+                gameRole.setCurrentMp((int) (gameRole.getMp() * matchPercentage(curMpImage, mpHalfImage)));
             }
             //detect current level and reset role level
             try {

@@ -2,13 +2,9 @@ package mir2.robot;
 
 import mir2.screen.Mir2Screen;
 import org.imgscalr.Scalr;
-import org.opencv.core.*;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -164,20 +160,4 @@ public class Test{
         ImageIO.write(newImage , "png", new File("C:\\Users\\yang\\Pictures\\coordination_2scale.png"));
     }
 
-    @org.junit.Test
-    public void testFindTwoDotPosition() throws IOException {
-        Mat source = Imgcodecs.imread("C:\\Users\\yang\\Pictures\\game_window_for_stand_point_locate.png");
-        Mat dst = Imgcodecs.imread("C:\\Users\\yang\\Pictures\\two_dot.png");
-        //创建于原图相同的大小，储存匹配度
-        Mat result = Mat.zeros(source.rows(), source.cols(), CvType.CV_32FC1);
-        //调用模板匹配方法
-        Imgproc.matchTemplate(source, dst, result, Imgproc.TM_SQDIFF);
-        //规格化
-        Core.normalize(result, result, 0, 1, Core.NORM_MINMAX, -1);
-        //获得最可能点，MinMaxLocResult是其数据格式，包括了最大、最小点的位置x、y
-        Core.MinMaxLocResult mlr = Core.minMaxLoc(result);
-        org.opencv.core.Point matchLoc = mlr.minLoc;
-        System.out.println("x: " + matchLoc.x + "   y:" + matchLoc.y);
-        System.out.println("width: " + dst.width() + "  height: " + dst.height());
-    }
 }

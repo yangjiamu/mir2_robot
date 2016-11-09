@@ -42,17 +42,11 @@ public class MapHolder {
 	private short x;
 
 	/** 获取角色身处x */
-	public static short mhRoleX() {
-		return instance.x;
-	}
 
 	/** 角色身处纵坐标 */
 	private short y;
 
 	/** 获取角色身处y */
-	public static short mhRoleY() {
-		return instance.y;
-	}
 
 	/** 地图绘制区域左上角(相对于游戏区域直角坐标系) */
 	private short px;
@@ -93,8 +87,7 @@ public class MapHolder {
 	private short phe;
 
 	/* 单例 */
-	private MapHolder() { }
-	private static MapHolder instance = new MapHolder();
+	public MapHolder() { }
 
 	/**
 	 * 从本地文件读取地图信息
@@ -104,8 +97,10 @@ public class MapHolder {
 	 *            地图编号
 	 * @return 地图实体
 	 */
-	public static Map readMapFromFile(String mapNo) {
-		try (FileInputStream fis = new FileInputStream(new File("/Users/yangwenjie/Documents/0.map"))) {
+	public Map readMapFromFile(Integer mapNo) {
+		try{
+			String mapInfoPath = this.getClass().getResource("/Map/" + String.valueOf(mapNo) + ".map").getPath();
+			FileInputStream fis = new FileInputStream(new File(mapInfoPath));
 			Map res = new Map();
 			byte[] bytes = new byte[4];
 			fis.read(bytes);

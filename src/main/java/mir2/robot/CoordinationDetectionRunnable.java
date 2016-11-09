@@ -2,91 +2,69 @@ package mir2.robot;
 
 import mir2.role.GameRole;
 import mir2.screen.Mir2Screen;
-import mir2.util.ColorUtil;
+import mir2.util.ImageUtil;
+import mir2.util.TemplateMatch;
 import net.sourceforge.tess4j.Tesseract1;
 import net.sourceforge.tess4j.TesseractException;
-import org.imgscalr.Scalr;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by yang on 2016/11/6.
  */
 public class CoordinationDetectionRunnable implements Runnable{
-    public static void main(String[] args) {
-        new Thread(new CoordinationDetectionRunnable()).start();
+    private GameRole gameRole;
+    private Mir2Screen mir2Screen = Mir2Screen.getInstance();
+    private static final Logger logger = LoggerFactory.getLogger(CoordinationDetectionRunnable.class);
+
+    public CoordinationDetectionRunnable(GameRole gameRole){
+        this.gameRole = gameRole;
     }
     @Override
     public void run() {
-        Mir2Screen mir2Screen = Mir2Screen.getInstance();
-        GameRole gameRole = GameRole.getInstance();
-        Tesseract1 chiSimOCRInstance = new Tesseract1();
         Tesseract1 digitOCRInstance = new Tesseract1();
-        chiSimOCRInstance.setDatapath("C:\\Program Files\\Tesseract-OCR\\tessdata");
-        chiSimOCRInstance.setLanguage("chi_sim");
         digitOCRInstance.setDatapath("C:\\Program Files\\Tesseract-OCR\\tessdata");
         digitOCRInstance.setLanguage("eng");
         digitOCRInstance.setTessVariable("tessedit_char_whitelist", "0123456789");
+        TemplateMatch templateMatch = new TemplateMatch();
+        String twoDotImagePath = this.getClass().getResource("/two_dot.png").getPath();
+        Mat twoDot = Imgcodecs.imread(twoDotImagePath.substring(1, twoDotImagePath.length()));
+        //Mat twoDot = Imgcodecs.imread("C:\\Users\\yang\\Pictures\\two_dot.png");
         while (true){
-            BufferedImage mapNameImage = mir2Screen.getMapNameArea("白日门");
-            BufferedImage coordinationArea = mir2Screen.getCoordinationArea("白日门");
-            ColorUtil.changeBackgroundToBlack(mapNameImage);
-            ColorUtil.changeBackgroundToBlack(coordinationArea);
+            BufferedImage coordinationArea = mir2Screen.getCoordinationArea(gameRole.getMap());
+            Point matchPoint = templateMatch.match(ImageUtil.bufferedImageToMat(coordinationArea), twoDot);
+            //erase : between x and y
+            for (int i = matchPoint.x; i <matchPoint.x+twoDot.width(); i++) {
+                for (int j = matchPoint.y; j <matchPoint.y+twoDot.height() ; j++) {
+                    coordinationArea.setRGB(i, j, Color.BLACK.getRGB());
+                }
+            }
+            ImageUtil.changeBackgroundToBlack(coordinationArea);
+            String coordination = null;
+            //1.8 1.9 pretty ok bu can mistake 3 and 8
+            //2.0 ok bu transfer : to 1 sometimes
+            //2.1 very good but sometimes can not seperate x and y
+            //2.2 can not seperate x and y
+            //2.3 - 2.5 becomes bad again
+            //2.6 mistake 3 and 8
+            long mark = System.currentTimeMillis();
             try {
-                String s = chiSimOCRInstance.doOCR(mapNameImage);
-                String mapName = chiSimOCRInstance.doOCR(scaleImage(mapNameImage, 1.8f));
-                System.out.println(s);
-                System.out.println(mapName);
-                String s1 = digitOCRInstance.doOCR(coordinationArea);
-                //1.8 1.9 pretty ok bu can mistake 3 and 8
-                //2.0 ok bu transfer : to 1 sometimes
-                //2.1 very good but sometimes can not seperate x and y
-                //2.2 can not seperate x and y
-                //2.3 - 2.5 becomes bad again
-                //2.6 mistake 3 and 8
-                String coordination = digitOCRInstance.doOCR(scaleImage(coordinationArea, 3.6f));
-                System.out.println(s1);
-                System.out.println(coordination);
+                coordination = digitOCRInstance.doOCR(ImageUtil.scaleImage(coordinationArea, 2.0f));
             } catch (TesseractException e) {
                 e.printStackTrace();
             }
-            System.out.println(coordinationArea);
-            try {
-                Thread.sleep(1000*5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            String[] cords = coordination.trim().split(" ");
+            logger.info("CoordinationDetectionRunnable runInLineByDistance, coordination recognized by ocr{}", coordination.trim());
+            //System.out.println("cost: " + (System.currentTimeMillis() - mark));
         }
     }
-
-    public BufferedImage scaleImage(BufferedImage image, float scale){
-        return Scalr.resize(image, Scalr.Method.BALANCED, (int)(image.getWidth() * scale), (int)(image.getHeight() * scale));
-    }
-
-    public void changeBackground(BufferedImage image){
-        for (int i = 0; i < image.getWidth(); i++) {
-            for (int i1 = 0; i1 < image.getHeight(); i1++) {
-                if (!isWhiteColor(image.getRGB(i, i1))){
-                    image.setRGB(i, i1, new Color(0, 0, 0).getRGB());
-                }
-            }
-        }
-    }
-
-    @org.junit.Test
-    public void testChangeBackground() throws IOException {
-        BufferedImage origin = ImageIO.read(new File("C:\\Users\\yang\\Pictures\\coordination.png"));
-        changeBackground(origin);
-        ImageIO.write(origin, "png", new File("C:\\Users\\yang\\Pictures\\coordination_black_back.png"));
-    }
-
-    public boolean isWhiteColor(int rgb){
-        int[] ints = ColorUtil.colorFromRgb(rgb);
-        Color color = new Color(ints[0], ints[1], ints[2]);
-        return color.getRed() == 255 && color.getGreen() == 255 && color.getBlue() == 255;
+    public static void main(String[] args) {
+        GameRole gameRole = new GameRole();
+        new Thread(new CoordinationDetectionRunnable(gameRole)).start();
     }
 }

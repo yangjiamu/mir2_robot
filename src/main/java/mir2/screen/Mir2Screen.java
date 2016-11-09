@@ -38,7 +38,6 @@ public class Mir2Screen {
     private static final int MIR2_COORDINATION_AREA_HEIGHT = 17;
     private static final int MIR2_CHI_SIM_PIXEL_WIDTH = 14;
 
-
     private static Mir2Screen instance = new Mir2Screen();
     private static volatile boolean initialized = false;
 
@@ -58,8 +57,6 @@ public class Mir2Screen {
         return MIR2_SMALL_BAG_RELATIVE_POSITON;
     }
 
-    private Point smallBagLeftTop;
-    private Point smallBagRightBottom;
     private Mir2Screen() {
         init();
     }
@@ -120,8 +117,8 @@ public class Mir2Screen {
     }
 
     public BufferedImage getNavigationArea(){
-        return getGameScreen().getSubimage((int)MIR2_COORDINATION_AREA_RELATIVE_START.getX(),
-                (int)MIR2_COORDINATION_AREA_RELATIVE_START.getY(),
+        return getGameScreen().getSubimage((int) MIR2_COORDINATION_AREA_RELATIVE_START.getX(),
+                (int) MIR2_COORDINATION_AREA_RELATIVE_START.getY(),
                 MIR2_COORDINATION_AREA_WIDTH, MIR2_COORDINATION_AREA_HEIGHT);
     }
 
