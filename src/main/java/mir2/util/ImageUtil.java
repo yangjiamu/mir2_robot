@@ -1,12 +1,13 @@
 package mir2.util;
 
 import org.imgscalr.Scalr;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,19 +34,25 @@ public class ImageUtil {
     }
 
     public static Mat bufferedImageToMat(BufferedImage bi) {
-        /*BufferedImage image = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
-        image.setData(bi.getData());
+        BufferedImage image = null;
+        if(bi.getType() != BufferedImage.TYPE_3BYTE_BGR){
+            image = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+            image.setData(bi.getData());
+        }
+        else {
+            image = bi;
+        }
         Mat mat = new Mat(bi.getHeight(), bi.getWidth(), CvType.CV_8UC3);
         byte[] data = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
         mat.put(0, 0, data);
-        return mat;*/
-        String tempPath = "C:\\Users\\yang\\Pictures\\temp.png";
+        return mat;
+        /*String tempPath = "C:\\Users\\yang\\Pictures\\temp.png";
         try {
             ImageIO.write(bi, "png", new File(tempPath));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Imgcodecs.imread(tempPath);
+        return Imgcodecs.imread(tempPath);*/
     }
 
     public static void saveImage(BufferedImage image, String fileName) throws IOException {

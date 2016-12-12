@@ -1,6 +1,6 @@
 package mir2.util;
 
-import mir2.map.MapTileInfo;
+import mir2.clientinfo.map.MapTileInfo;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -111,6 +111,60 @@ public class Misc {
 		res.setLight(bytes[11]);
 		return res;
 	}
+
+	public static MapTileInfo modifyMapTileInfo(byte[] bytes) throws IOException {
+		MapTileInfo res = new MapTileInfo();
+		// 读取背景
+		short bng = readShort(bytes, 0, true);
+		// 读取中间层
+		short mid = readShort(bytes, 2, true);
+		// 读取对象层
+		short obj = readShort(bytes, 4, true);
+		// 设置背景
+		if((bng & 0x7fff) > 0) {
+			res.setBngImgIdx((short) ((bng & 0x7fff) - 1));
+			res.setHasBng(true);
+		}
+		// 设置中间层
+		if((mid & 0x7fff) > 0) {
+			res.setMidImgIdx((short) ((mid & 0x7fff) - 1));
+			res.setHasMid(true);
+		}
+		// 设置对象层
+		if((obj & 0x7fff) > 0) {
+			res.setObjImgIdx((short) ((obj & 0x7fff) - 1));
+			res.setHasObj(true);
+		}
+		// 设置是否可站立
+		res.setCanWalk(!is1AtTopDigit(bng) && !is1AtTopDigit(obj));
+		// 设置是否可飞行
+		res.setCanFly(!is1AtTopDigit(obj));
+
+		// 读取门索引(第7个byte)
+		byte btTmp = bytes[6];
+		if(is1AtTopDigit(btTmp)) {
+			res.setDoorIdx((byte) (btTmp & 0x7F));
+			res.setHasDoor(true);
+		}
+		// 读取门偏移(第8个byte)
+		btTmp = bytes[7];
+		res.setDoorOffset(btTmp);
+		if(is1AtTopDigit(btTmp)) res.setDoorOpen(true);
+		// 读取动画帧数(第9个byte)
+		btTmp = bytes[8];
+		res.setAniFrame(btTmp);
+		if(is1AtTopDigit(btTmp)) {
+			res.setAniFrame((byte) (btTmp & 0x7F));
+			res.setHasAni(true);
+		}
+		// 读取并设置动画跳帧数(第10个byte)
+		res.setAniTick(bytes[9]);
+		// 读取资源文件索引(第11个byte)
+		res.setObjFileIdx(bytes[10]);
+		// 读取光照(第12个byte)
+		res.setLight(bytes[11]);
+		return res;
+	}
 	
 	/**
 	 * 生成纹理索引
@@ -196,6 +250,11 @@ public class Misc {
 			return (short) ((bytes[index + 1] << 8) | (bytes[index] & 0xff));
 		else
 			return (short) ((bytes[index] << 8) | (bytes[index + 1] & 0xff));
+	}
+
+	public static void setShortZero(byte[] bytes, int index){
+		bytes[index] = 0;
+		bytes[index+1] = 0;
 	}
 
 	/**
